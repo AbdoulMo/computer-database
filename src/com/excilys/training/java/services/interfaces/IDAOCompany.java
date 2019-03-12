@@ -6,7 +6,7 @@ import com.excilys.training.java.modele.Company;
 
 public interface IDAOCompany {
 
-	public Company getCompany(String name);
+	public Company getCompany(int id);
 
 	public List<Company> getAllCompany();
 	

@@ -41,7 +41,7 @@ public class JDBCComputer implements IDAOComputer {
 
 	@Override
 	public List<Computer> getAllComputers() {
-		List<Computer> cList = new ArrayList<>();
+		List<Computer> lComputer = new ArrayList<>();
 		Computer c = new Computer();
 		query = "SELECT * FROM computer";
 		try {
@@ -53,22 +53,21 @@ public class JDBCComputer implements IDAOComputer {
 				c.setIntroduced(resultSet.getDate("introduced"));
 				c.setDiscontinued(resultSet.getDate("discontinued"));
 				c.setManufacturer_id(resultSet.getInt("manufacturer_id"));
-				cList.add(c);
+				lComputer.add(c);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCConnection.disconnection();
 		}
-		return cList;
+		return lComputer;
 	}
 
 	@Override
 	public int addComputer(Computer c) {
 		int result = 0;
-		query = "INSERT INTO computer (name, introduced, discontinued, company_id)"
-				+ " VALUES (?,?,?,?)";
+		query = "INSERT INTO computer (name, introduced, discontinued, company_id)" + " VALUES (?,?,?,?)";
 		try {
 			preparedStatement = JDBCConnection.connection().prepareStatement(query);
 			preparedStatement.setString(1, c.getName());
@@ -79,7 +78,7 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCConnection.disconnection();
 		}
 		return result;
@@ -96,7 +95,7 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCConnection.disconnection();
 		}
 		return result;
@@ -105,8 +104,7 @@ public class JDBCComputer implements IDAOComputer {
 	@Override
 	public int updateComputer(Computer c) {
 		int result = 0;
-		query = "UPDATE computer SET nome = ?, introduced = ?, discontinued = ?,company_id = ?"
-				+ "WHERE id = ?";
+		query = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
 		try {
 			preparedStatement = JDBCConnection.connection().prepareStatement(query);
 			preparedStatement.setString(1, c.getName());
@@ -117,7 +115,7 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCConnection.disconnection();
 		}
 		return result;
