@@ -10,8 +10,10 @@ public class JDBCConnection {
 	private final static String USERNAME = "admincdb";
 	private final static String PASSWORD = "qwerty1234";
 	private static Connection connection;
+	
+	private final static JDBCConnection _instance = new JDBCConnection();
 
-	static {
+	public JDBCConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -19,9 +21,9 @@ public class JDBCConnection {
 			e.printStackTrace();
 		}
 	}
-
-	public JDBCConnection() {
-
+	
+	public static JDBCConnection getInstance() {
+		return _instance;
 	}
 
 	public static Connection connection() {
