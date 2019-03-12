@@ -1,6 +1,6 @@
 package com.excilys.training.java.modele;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Computer {
 
