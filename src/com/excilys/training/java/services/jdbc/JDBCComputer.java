@@ -28,7 +28,7 @@ public class JDBCComputer implements IDAOComputer {
 				c.setName(resultSet.getString("name"));
 				c.setIntroduced(resultSet.getDate("introduced"));
 				c.setDiscontinued(resultSet.getDate("discontinued"));
-				c.setManufacturer_id(resultSet.getInt("manufacturer_id"));
+				c.setManufacturer_id(resultSet.getInt("company_id"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -42,17 +42,17 @@ public class JDBCComputer implements IDAOComputer {
 	@Override
 	public List<Computer> getAllComputers() {
 		List<Computer> lComputer = new ArrayList<>();
-		Computer c = new Computer();
 		query = "SELECT * FROM computer";
 		try {
 			preparedStatement = JDBCConnection.connection().prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
+			while (resultSet.next()) {
+				Computer c = new Computer();
 				c.setId(resultSet.getInt("id"));
 				c.setName(resultSet.getString("name"));
 				c.setIntroduced(resultSet.getDate("introduced"));
 				c.setDiscontinued(resultSet.getDate("discontinued"));
-				c.setManufacturer_id(resultSet.getInt("manufacturer_id"));
+				c.setManufacturer_id(resultSet.getInt("company_id"));
 				lComputer.add(c);
 			}
 		} catch (SQLException e) {
