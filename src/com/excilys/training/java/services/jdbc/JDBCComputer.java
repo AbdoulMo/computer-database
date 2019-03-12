@@ -16,12 +16,12 @@ public class JDBCComputer implements IDAOComputer {
 	private ResultSet resultSet;
 
 	@Override
-	public Computer getComputer(String name) {
+	public Computer getComputer(int id) {
 		Computer c = new Computer();
-		query = "SELECT * FROM computer WHERE name = ?";
+		query = "SELECT * FROM computer WHERE id = ?";
 		try {
 			preparedStatement = JDBCConnection.connection().prepareStatement(query);
-			preparedStatement.setString(1, name);
+			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				c.setId(resultSet.getInt("id"));
@@ -65,31 +65,61 @@ public class JDBCComputer implements IDAOComputer {
 	}
 
 	@Override
-	public boolean addComputer(Computer c) {
-		String s = "Naissance)";
+	public int addComputer(Computer c) {
+		int result = 0;
 		query = "INSERT INTO computer (name, introduced, discontinued, company_id)"
 				+ " VALUES (?,?,?,?)";
 		try {
 			preparedStatement = JDBCConnection.connection().prepareStatement(query);
 			preparedStatement.setString(1, c.getName());
-			preparedStatement.setDate();
+			preparedStatement.setDate(2, c.getIntroduced());
+			preparedStatement.setDate(3, c.getDiscontinued());
+			preparedStatement.setInt(4, c.getManufacturer_id());
+			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			JDBCConnection.disconnection();
 		}
-		
-		return false;
+		return result;
 	}
 
 	@Override
-	public boolean deleteComputer(Computer c) {
-		// TODO Auto-generated method stub
-		return false;
+	public int deleteComputer(Computer c) {
+		int result = 0;
+		query = "DELETE FROM computer WHERE id = ?";
+		try {
+			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+			preparedStatement.setInt(1, c.getId());
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCConnection.disconnection();
+		}
+		return result;
 	}
 
 	@Override
-	public boolean updateComputer(Computer c) {
-		// TODO Auto-generated method stub
-		return false;
+	public int updateComputer(Computer c) {
+		int result = 0;
+		query = "UPDATE computer SET nome = ?, introduced = ?, discontinued = ?,company_id = ?"
+				+ "WHERE id = ?";
+		try {
+			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+			preparedStatement.setString(1, c.getName());
+			preparedStatement.setDate(2, c.getIntroduced());
+			preparedStatement.setDate(3, c.getDiscontinued());
+			preparedStatement.setInt(4, c.getManufacturer_id());
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCConnection.disconnection();
+		}
+		return result;
 	}
 }

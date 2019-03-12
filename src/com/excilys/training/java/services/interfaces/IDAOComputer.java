@@ -6,13 +6,13 @@ import com.excilys.training.java.modele.Computer;
 
 public interface IDAOComputer {
 
-	public Computer getComputer(String name);
+	public Computer getComputer(int id);
 	
 	public List<Computer> getAllComputers();
 	
-	public boolean addComputer(Computer c);
+	public int addComputer(Computer c);
 	
-	public boolean deleteComputer(Computer c);
+	public int deleteComputer(Computer c);
 	
-	public boolean updateComputer(Computer c);
+	public int updateComputer(Computer c);
 }

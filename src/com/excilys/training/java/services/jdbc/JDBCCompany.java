@@ -20,20 +20,20 @@ public class JDBCCompany implements IDAOCompany{
 	}
 
 	@Override
-	public boolean addCompany(Company c) {
+	public int addCompany(Company c) {
 		// TODO Auto-generated method stub
-		return false;
+		return 0;
 	}
 
 	@Override
-	public boolean deleteCompany(Company c) {
+	public int deleteCompany(Company c) {
 		// TODO Auto-generated method stub
-		return false;
+		return 0;
 	}
 
 	@Override
-	public boolean updateCompany(Company c) {
+	public int updateCompany(Company c) {
 		// TODO Auto-generated method stub
-		return false;
+		return 0;
 	}
 }

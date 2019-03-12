@@ -10,9 +10,9 @@ public interface IDAOCompany {
 
 	public List<Company> getAllCompany();
 	
-	public boolean addCompany(Company c);
+	public int addCompany(Company c);
 	
-	public boolean deleteCompany(Company c);
+	public int deleteCompany(Company c);
 	
-	public boolean updateCompany(Company c);
+	public int updateCompany(Company c);
 }
