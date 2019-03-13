@@ -52,51 +52,9 @@ public class Computer {
 		this.manufacturer_id = manufacturer_id;
 	}
 
-	public String formatReadDate(Date date) {
-		SimpleDateFormat readingFormat = new SimpleDateFormat("dd-MM-yyyy");
-		String d = readingFormat.format(date);
-		return d;
-	}
-
 	@Override
 	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", introduced=" + formatReadDate(introduced) + ", discontinued="
-				+ formatReadDate(discontinued) + ", manufacturer_id=" + manufacturer_id + "]";
+		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="
+				+ discontinued + ", manufacturer_id=" + manufacturer_id + "]";
 	}
-	
-	public static void main(String[] args) {
-		String myDate = "01-04-1994";
-		SimpleDateFormat databaseFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-		try {
-			Date d2 = (Date) databaseFormat.parse(myDate);
-			System.out.println(d2.getTime());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-//	{
-//		
-//		
-////		SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
-////		Date d = new Date(1994, 04, 01);
-////
-////		String s2 = inputFormat.format(d);
-////		
-////		System.out.println(s2);
-//		
-////		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
-////	    String s = formatter.format(new Date(60725973600000L));
-////	    String myDate = "01-04-1994";
-////	    try {
-////			Date d2 = (Date) formatter.parse(myDate);
-////		    System.out.println(d2);
-////		} catch (ParseException e) {
-////			// TODO Auto-generated catch block
-////			e.printStackTrace();
-////		}
-////	    System.out.println(d.getTime());
-//	}
 }
