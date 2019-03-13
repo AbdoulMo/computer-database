@@ -18,6 +18,8 @@ public class Cli {
 	
 	private IDAOComputer computerDAO = new JDBCComputer();
 	private IDAOCompany companyDAO = new JDBCCompany();
+	private Scanner input = new Scanner(System.in);
+	private boolean leaveApp = false;
 			
 	public void displayMenu() {
 		System.out.println("Tapez un chiffre pour choisir l'action :\n"
@@ -30,22 +32,29 @@ public class Cli {
 				+ "7: Quitter.");
 	}
 	
-	public int getInput() {
-		int input = 0;
-		try (Scanner in = new Scanner(System.in)){
-			input = in.nextInt();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return input;
+	public String getInput() {
+		return input.nextLine();
 	}
 	
+	public boolean isLeaveApp() {
+		return leaveApp;
+	}
+
+	public void setLeaveApp(boolean leaveApp) {
+		this.leaveApp = leaveApp;
+	}
+
 	public void action(int choice) {
+		Computer computer;
+		Company company;
+		int id;
+		String reponse;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		switch (choice) {
 		case 1:
 			ArrayList<Computer> computerList = getComputerList();
-			for(Computer c : computerList) {
-				System.out.println(c);
+			for(Computer pc : computerList) {
+				System.out.println(pc);
 			}
 			break;
 		case 2:
@@ -56,25 +65,76 @@ public class Cli {
 			break;
 		case 3:
 			System.out.println("Entrez l'identifiant du pc à afficher");
-			try (Scanner in = new Scanner(System.in)){
-				int id = in.nextInt();
-				Computer c = getComputerDetails(id);
-				System.out.println(c);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			id = Integer.parseInt(getInput());
+			computer = getComputerDetails(id);
+			System.out.println(computer);
 			break;
 		case 4:
+			System.out.println("Donnez le nom du nouveau Pc :\n");
+			//Computer c = new Computer();
 			break;
 		case 5:
+			System.out.println("Pour continuer il faut connaitre l'identifiant de l'ordinateur...\n"
+					+ "Souhaitez vous continuer (o/n)");
+			reponse = getInput();
+			if(reponse.equals("o")) {
+				System.out.println("Entrez l'identifiant de l'ordinateur à modifier: \n");
+				id = Integer.parseInt(getInput());
+				computer = getComputerDetails(id);
+				boolean leaveOption = false;
+				String optionInput = new String();
+				while (leaveOption) {
+					System.out.println("Choisisez le paramètre a modifier "
+							+ "(1: Nom de l'ordinateur\n"
+							+ " 2: Date d'introduction\n"
+							+ " 3: Date d'arrete de production\n"
+							+ " 4: L'identifiant du fabriquant\n"
+							+ " 5: Pour terminer");
+					int choixModif = Integer.parseInt(getInput());
+					switch(choixModif){
+						case 1:
+							System.out.println("Entrez le nouveau nom: ");
+							optionInput = getInput();
+							computer.setName(optionInput);
+							System.out.println("Nom modifié !");
+							break;
+						case 2:
+							System.out.println("Entrez la nouvelle date (yyyy-mm-dd): ");
+							optionInput = getInput();
+						try {
+							java.util.Date d = format.parse(optionInput);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+//							computer.setIntroduced(new D);
+							System.out.println("Nom modifié !");
+							break;
+						default:
+							break;
+					}
+				}
+			}
 			break;
 		case 6:
+			System.out.println("Pour continuer il faut connaitre l'identifiant de l'ordinateur...\n"
+					+ "Souhaitez vous continuer (o/n)");
+			reponse = getInput();
+			if(reponse.equals("o")) {
+				System.out.println("Entrez l'identifiant de l'ordinateur à supprimer: \n");
+				id = Integer.parseInt(getInput());
+				computer = getComputerDetails(id);
+				deleteComputer(id);
+				System.out.println("L'ordinateur "+ computer.getName() + 
+						" avec l'identifiant "+ computer.getId() +" a été supprimé.");
+			}
 			break;
 		case 7:
+			System.out.println("Fin de l'application");
+			setLeaveApp(true);
 			break;
 		default:
+			System.out.println("Choix invalide veuillez réessayer !");
 			break;
 		}
 	}
@@ -109,38 +169,12 @@ public class Cli {
 	}
 	
 	public static void main(String[] args) {
-//		Cli app = new Cli();
-//		app.displayMenu();
-//		int input = app.getInput();
-//		app.action(input);
-		
-//		IDAOComputer computerDAO = new JDBCComputer();
-//		IDAOCompany companyDAO = new JDBCCompany();
-//		
-//		Computer c = new Computer();
-//		c.setName("Test");
-//		c.setManufacturer_id(4);
-//		c.setDiscontinued(new Date(1994, 04, 01));
-//		computerDAO.deleteComputer(c);
-		
-		SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMM-yy");
-		SimpleDateFormat databaseFormat = new SimpleDateFormat("yyyy-MMM-dd");
-		Date d = new Date(1994, 04, 01);
-
-		String s2 = inputFormat.format(d);
-		
-		System.out.println(s2);
-		
-//		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
-//	    String s = formatter.format(new Date(60725973600000L));
-//	    String myDate = "01-04-1994";
-//	    try {
-//			Date d2 = (Date) formatter.parse(myDate);
-//		    System.out.println(d2);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	    System.out.println(d.getTime());
+		int choice = 0;
+		Cli app = new Cli();
+		while(!app.isLeaveApp()) {
+			app.displayMenu();
+			choice = Integer.parseInt(app.getInput());
+			app.action(choice);
+		}
 	}
 }
