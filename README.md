@@ -4,3 +4,5 @@
 * List companies
 * Show computer details (the detailed information of only one computer)
 * Delete a computer
+## dependences
+* mysql: 8.0.15
