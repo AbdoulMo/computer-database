@@ -1,5 +1,9 @@
 package com.excilys.training.java.ui;
 
+import java.sql.Date;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -110,12 +114,33 @@ public class Cli {
 //		int input = app.getInput();
 //		app.action(input);
 		
-		IDAOComputer computerDAO = new JDBCComputer();
-		IDAOCompany companyDAO = new JDBCCompany();
+//		IDAOComputer computerDAO = new JDBCComputer();
+//		IDAOCompany companyDAO = new JDBCCompany();
+//		
+//		Computer c = new Computer();
+//		c.setName("Test");
+//		c.setManufacturer_id(4);
+//		c.setDiscontinued(new Date(1994, 04, 01));
+//		computerDAO.deleteComputer(c);
 		
-		Computer c = new Computer();
-		c.setName("Test");
-		c.setManufacturer_id(4);
-		computerDAO.deleteComputer(c);
+		SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMM-yy");
+		SimpleDateFormat databaseFormat = new SimpleDateFormat("yyyy-MMM-dd");
+		Date d = new Date(1994, 04, 01);
+
+		String s2 = inputFormat.format(d);
+		
+		System.out.println(s2);
+		
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
+//	    String s = formatter.format(new Date(60725973600000L));
+//	    String myDate = "01-04-1994";
+//	    try {
+//			Date d2 = (Date) formatter.parse(myDate);
+//		    System.out.println(d2);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	    System.out.println(d.getTime());
 	}
 }
