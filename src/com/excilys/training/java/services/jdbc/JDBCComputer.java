@@ -75,7 +75,11 @@ public class JDBCComputer implements IDAOComputer {
 			preparedStatement.setString(1, c.getName());
 			preparedStatement.setDate(2, c.getIntroduced());
 			preparedStatement.setDate(3, c.getDiscontinued());
-			preparedStatement.setInt(4, c.getManufacturer_id());
+			if(c.getManufacturer_id() == 0) {
+				preparedStatement.setBinaryStream(4, null);
+			}else {
+				preparedStatement.setInt(4, c.getManufacturer_id());
+			}
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
