@@ -1,5 +1,7 @@
 package com.excilys.training.java.services.jdbc;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +13,10 @@ import com.excilys.training.java.services.interfaces.IDAOComputer;
 
 public class JDBCComputer implements IDAOComputer {
 
+	private final String URL = "jdbc:mysql://localhost:3306/computer-database-db?useSSL=false";
+	private final String USERNAME = "admincdb";
+	private final String PASSWORD = "qwerty1234";
+
 	private String query;
 	private PreparedStatement preparedStatement;
 	private ResultSet resultSet;
@@ -19,8 +25,8 @@ public class JDBCComputer implements IDAOComputer {
 	public Computer getComputer(int id) {
 		Computer c = new Computer();
 		query = "SELECT * FROM computer WHERE id = ?";
-		try {
-			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
@@ -33,8 +39,6 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCConnection.disconnection();
 		}
 		return c;
 	}
@@ -43,8 +47,8 @@ public class JDBCComputer implements IDAOComputer {
 	public List<Computer> getAllComputers() {
 		List<Computer> lComputer = new ArrayList<>();
 		query = "SELECT * FROM computer";
-		try {
-			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+			preparedStatement = conn.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Computer c = new Computer();
@@ -58,8 +62,6 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCConnection.disconnection();
 		}
 		return lComputer;
 	}
@@ -68,8 +70,8 @@ public class JDBCComputer implements IDAOComputer {
 	public int addComputer(Computer c) {
 		int result = 0;
 		query = "INSERT INTO computer (name, introduced, discontinued, company_id)" + " VALUES (?,?,?,?)";
-		try {
-			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, c.getName());
 			preparedStatement.setDate(2, c.getIntroduced());
 			preparedStatement.setDate(3, c.getDiscontinued());
@@ -78,8 +80,6 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCConnection.disconnection();
 		}
 		return result;
 	}
@@ -88,15 +88,13 @@ public class JDBCComputer implements IDAOComputer {
 	public int deleteComputer(Computer c) {
 		int result = 0;
 		query = "DELETE FROM computer WHERE id = ?";
-		try {
-			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, c.getId());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCConnection.disconnection();
 		}
 		return result;
 	}
@@ -105,8 +103,8 @@ public class JDBCComputer implements IDAOComputer {
 	public int updateComputer(Computer c) {
 		int result = 0;
 		query = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
-		try {
-			preparedStatement = JDBCConnection.connection().prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, c.getName());
 			preparedStatement.setDate(2, c.getIntroduced());
 			preparedStatement.setDate(3, c.getDiscontinued());
@@ -115,8 +113,6 @@ public class JDBCComputer implements IDAOComputer {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			JDBCConnection.disconnection();
 		}
 		return result;
 	}
