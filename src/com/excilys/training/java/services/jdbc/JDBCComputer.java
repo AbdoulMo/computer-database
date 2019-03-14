@@ -113,6 +113,7 @@ public class JDBCComputer implements IDAOComputer {
 			preparedStatement.setDate(2, c.getIntroduced());
 			preparedStatement.setDate(3, c.getDiscontinued());
 			preparedStatement.setInt(4, c.getManufacturer_id());
+			preparedStatement.setInt(5, c.getId());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
