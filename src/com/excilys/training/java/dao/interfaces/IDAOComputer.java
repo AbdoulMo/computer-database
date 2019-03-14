@@ -28,10 +28,10 @@ public interface IDAOComputer {
 	
 	/**
 	 * Delete a computer
-	 * @param c a computer
+	 * @param id the id of the computer
 	 * @return an int that indicates the number of rows affected
 	 */
-	public int deleteComputer(Computer c);
+	public int deleteComputer(int id);
 	
 	/**
 	 * Update a computer

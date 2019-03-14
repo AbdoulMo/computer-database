@@ -88,12 +88,12 @@ public class JDBCComputer implements IDAOComputer {
 	}
 
 	@Override
-	public int deleteComputer(Computer c) {
+	public int deleteComputer(int id) {
 		int result = 0;
 		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
 				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_DELETE_COMPUTER);) {
-			preparedStatement.setInt(1, c.getId());
+			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

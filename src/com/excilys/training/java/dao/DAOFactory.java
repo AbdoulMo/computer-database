@@ -47,7 +47,7 @@ public class DAOFactory {
 	 */
 	public static IDAOComputer getDAOComputer(String type) {
 		if (type.equals("jdbc")) {
-			return new JDBCComputer();
+			return new JDBCComputer(properties);
 		} else if (type.equals("hibernate")) {
 			return null;
 		}

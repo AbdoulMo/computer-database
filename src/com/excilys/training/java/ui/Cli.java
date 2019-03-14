@@ -22,10 +22,16 @@ public class Cli {
 	private boolean leaveApp = false;
 
 	public void displayMenu() {
-		System.out.println("Tapez un chiffre pour choisir l'action :\n" + "1: Lister les ordinateurs.\n"
+		System.out.println("Entrez un chiffre pour choisir l'action :\n" + "1: Lister les ordinateurs.\n"
 				+ "2: Lister les entreprises.\n" + "3: Afficher les détails d'un ordinateur.\n"
 				+ "4: Créer un ordinateur.\n" + "5: Mettre à jour les informations d'un ordinateur.\n"
 				+ "6: Supprimer un ordinateur.\n" + "7: Quitter.");
+	}
+	
+	public void displayComputerList(ArrayList<Computer> computerList) {
+		for (Computer pc : computerList) {
+			System.out.println(pc);
+		}
 	}
 
 	public String getInput() {
@@ -48,32 +54,23 @@ public class Cli {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		switch (choice) {
 		case 1:
-			ArrayList<Computer> computerList = getComputerList();
-			for (Computer pc : computerList) {
-				System.out.println(pc);
-			}
+			// getAllComputers
 			break;
 		case 2:
-			ArrayList<Company> companyList = getCompanyList();
-			for (Company c : companyList) {
-				System.out.println(c);
-			}
+			// getAllCompanys
 			break;
 		case 3:
 			System.out.println("Entrez l'identifiant du pc à afficher");
-			id = Integer.parseInt(getInput());
-			computer = getComputerDetails(id);
+			// getComputer
 			System.out.println(computer);
 			break;
 		case 4:
-			Computer c = new Computer();
 			System.out.println("Le nom du nouveau Pc :\n");
-			c.setName(getInput());
+			String name = getInput();
 			System.out.println("La date d'introduction au format (yyyy-mm-dd)");
 			try {
 				java.util.Date utilDate = new SimpleDateFormat("yyyy-mm-dd").parse(getInput());
 				Date date = new Date(utilDate.getTime());
-				c.setIntroduced(date);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -82,14 +79,13 @@ public class Cli {
 			try {
 				java.util.Date utilDate = new SimpleDateFormat("yyyy-mm-dd").parse(getInput());
 				Date date = new Date(utilDate.getTime());
-				c.setDiscontinued(date);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			System.out.println("L'identifiant de l'entreprise");
-			c.setManufacturer_id(Integer.parseInt(getInput()));
-			computerDAO.addComputer(c);
+			int companyId = Integer.parseInt(getInput());
+			// createComputer
 			System.out.println("Nouvel ordinateur crée");
 			break;
 		case 5:
@@ -181,35 +177,6 @@ public class Cli {
 			System.out.println("Choix invalide veuillez réessayer !");
 			break;
 		}
-	}
-
-	public ArrayList<Computer> getComputerList() {
-		ArrayList<Computer> computerList = (ArrayList<Computer>) computerDAO.getAllComputers();
-		return computerList;
-	}
-
-	public ArrayList<Company> getCompanyList() {
-		ArrayList<Company> companyList = (ArrayList<Company>) companyDAO.getAllCompany();
-		return companyList;
-	}
-
-	public Computer getComputerDetails(int id) {
-		Computer computer = computerDAO.getComputer(id);
-		return computer;
-	}
-
-	public int createComputer(Computer c) {
-		return computerDAO.addComputer(c);
-	}
-
-	public int updateComputer(int id) {
-		Computer c = computerDAO.getComputer(id);
-		return computerDAO.deleteComputer(c);
-	}
-
-	public int deleteComputer(int id) {
-		Computer c = computerDAO.getComputer(id);
-		return computerDAO.deleteComputer(c);
 	}
 
 	public static void main(String[] args) {
