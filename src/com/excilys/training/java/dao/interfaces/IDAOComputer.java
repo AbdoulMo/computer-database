@@ -1,6 +1,6 @@
-package com.excilys.training.java.services.interfaces;
+package com.excilys.training.java.dao.interfaces;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.excilys.training.java.modele.Computer;
 
@@ -8,7 +8,7 @@ public interface IDAOComputer {
 
 	public Computer getComputer(int id);
 	
-	public List<Computer> getAllComputers();
+	public ArrayList<Computer> getAllComputers();
 	
 	public int addComputer(Computer c);
 	
