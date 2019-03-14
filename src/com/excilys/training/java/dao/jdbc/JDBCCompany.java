@@ -1,24 +1,17 @@
 package com.excilys.training.java.dao.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.sql.*;
+import java.util.*;
 
 import com.excilys.training.java.dao.interfaces.IDAOCompany;
 import com.excilys.training.java.modele.Company;
 
 public class JDBCCompany implements IDAOCompany {
 
+	private Properties properties;
 	private static final String QUERY_GET_COMPANY = "SELECT * FROM company WHERE id = ?";
 	private static final String QUERY_GET_ALL_COMPANY = "SELECT * FROM company";
-
 	private ResultSet resultSet;
-
-	private Properties properties;
 
 	public JDBCCompany(Properties props) {
 		this.properties = props;

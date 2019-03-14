@@ -1,14 +1,10 @@
 package com.excilys.training.java.dao;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
-import com.excilys.training.java.dao.interfaces.IDAOCompany;
-import com.excilys.training.java.dao.interfaces.IDAOComputer;
-import com.excilys.training.java.dao.jdbc.JDBCCompany;
-import com.excilys.training.java.dao.jdbc.JDBCComputer;
+import com.excilys.training.java.dao.interfaces.*;
+import com.excilys.training.java.dao.jdbc.*;
 
 public class DAOFactory {
 

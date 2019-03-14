@@ -1,31 +1,31 @@
 package com.excilys.training.java.dao.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
+import java.util.*;
 
 import com.excilys.training.java.dao.interfaces.IDAOComputer;
 import com.excilys.training.java.modele.Computer;
 
 public class JDBCComputer implements IDAOComputer {
 
-	private final String URL = "jdbc:mysql://localhost:3306/computer-database-db?useSSL=false";
-	private final String USERNAME = "admincdb";
-	private final String PASSWORD = "qwerty1234";
-
-	private String query;
-	private PreparedStatement preparedStatement;
+	private Properties properties;
+	private static final String QUERY_GET_COMPUTER = "SELECT * FROM computer WHERE id = ?";
+	private static final String QUERY_GET_ALL_COMPUTERS = "SELECT * FROM computer";
+	private static final String QUERY_ADD_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES (?,?,?,?)";
+	private static final String QUERY_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
+	private static final String QUERY_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
 	private ResultSet resultSet;
+
+	public JDBCComputer(Properties props) {
+		this.properties = props;
+	}
 
 	@Override
 	public Computer getComputer(int id) {
 		Computer c = new Computer();
-		query = "SELECT * FROM computer WHERE id = ?";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-			preparedStatement = conn.prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
@@ -45,9 +45,9 @@ public class JDBCComputer implements IDAOComputer {
 	@Override
 	public ArrayList<Computer> getAllComputers() {
 		ArrayList<Computer> lComputer = new ArrayList<>();
-		query = "SELECT * FROM computer";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-			preparedStatement = conn.prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPUTERS);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Computer c = new Computer();
@@ -68,15 +68,15 @@ public class JDBCComputer implements IDAOComputer {
 	@Override
 	public int addComputer(Computer c) {
 		int result = 0;
-		query = "INSERT INTO computer (name, introduced, discontinued, company_id)" + " VALUES (?,?,?,?)";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-			preparedStatement = conn.prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_ADD_COMPUTER);) {
 			preparedStatement.setString(1, c.getName());
 			preparedStatement.setDate(2, c.getIntroduced());
 			preparedStatement.setDate(3, c.getDiscontinued());
-			if(c.getManufacturer_id() == 0) {
+			if (c.getManufacturer_id() == 0) {
 				preparedStatement.setBinaryStream(4, null);
-			}else {
+			} else {
 				preparedStatement.setInt(4, c.getManufacturer_id());
 			}
 			result = preparedStatement.executeUpdate();
@@ -90,9 +90,9 @@ public class JDBCComputer implements IDAOComputer {
 	@Override
 	public int deleteComputer(Computer c) {
 		int result = 0;
-		query = "DELETE FROM computer WHERE id = ?";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-			preparedStatement = conn.prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_DELETE_COMPUTER);) {
 			preparedStatement.setInt(1, c.getId());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -105,9 +105,9 @@ public class JDBCComputer implements IDAOComputer {
 	@Override
 	public int updateComputer(Computer c) {
 		int result = 0;
-		query = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-			preparedStatement = conn.prepareStatement(query);
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_COMPUTER);) {
 			preparedStatement.setString(1, c.getName());
 			preparedStatement.setDate(2, c.getIntroduced());
 			preparedStatement.setDate(3, c.getDiscontinued());
