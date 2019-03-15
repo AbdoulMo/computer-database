@@ -15,7 +15,7 @@ public class DAOFactory {
 	 * and store them in the properties variable
 	 */
 	static {
-		try (FileInputStream in = new FileInputStream("/WEB-INF/db.properties")) {
+		try (FileInputStream in = new FileInputStream("WebContent/WEB-INF/db.properties")) {
 			properties.load(in);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
