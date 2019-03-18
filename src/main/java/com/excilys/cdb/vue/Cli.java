@@ -1,10 +1,14 @@
-package com.excilys.training.java.ui;
+package com.excilys.cdb.vue;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.excilys.training.java.modele.Company;
-import com.excilys.training.java.modele.Computer;
+import com.excilys.cdb.dao.JDBCCompany;
+import com.excilys.cdb.dao.JDBCComputer;
+import com.excilys.cdb.interfaces.IDAOCompany;
+import com.excilys.cdb.interfaces.IDAOComputer;
+import com.excilys.cdb.modele.Company;
+import com.excilys.cdb.modele.Computer;
 
 public class Cli {
 
