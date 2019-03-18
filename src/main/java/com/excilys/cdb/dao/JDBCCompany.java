@@ -1,57 +1,54 @@
 package com.excilys.cdb.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 import com.excilys.cdb.interfaces.IDAOCompany;
 import com.excilys.cdb.modele.Company;
 
+
 public class JDBCCompany implements IDAOCompany {
 
-	private final String URL = "jdbc:mysql://localhost:3306/computer-database-db?useSSL=false";
-	private final String USERNAME = "admincdb";
-	private final String PASSWORD = "qwerty1234";
-	
-	private String query;
-	private PreparedStatement preparedStatement;
+	private Properties properties;
+	private static final String QUERY_GET_COMPANY = "SELECT * FROM company WHERE id = ?";
+	private static final String QUERY_GET_ALL_COMPANY = "SELECT * FROM company";
 	private ResultSet resultSet;
+
+	public JDBCCompany(Properties props) {
+		this.properties = props;
+	}
 
 	@Override
 	public Company getCompany(int id) {
-		Company c = new Company();
-		query = "SELECT * FROM company WHERE id = ?";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)){
-			preparedStatement = conn.prepareStatement(query);
+		Company company = new Company();
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPANY);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				c.setId(resultSet.getInt("id"));
-				c.setName(resultSet.getString("name"));
+				company.setId(resultSet.getInt("id"));
+				company.setName(resultSet.getString("name"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return c;
+		return company;
 	}
 
 	@Override
-	public List<Company> getAllCompany() {
-		List<Company> lCompany = new ArrayList<>();
-		query = "SELECT * FROM company";
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)){
-			preparedStatement = conn.prepareStatement(query);
+	public ArrayList<Company> getAllCompany() {
+		ArrayList<Company> lCompany = new ArrayList<>();
+		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPANY);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Company c = new Company();
-				c.setId(resultSet.getInt("id"));
-				c.setName(resultSet.getString("name"));
-				lCompany.add(c);
+				Company company = new Company();
+				company.setId(resultSet.getInt("id"));
+				company.setName(resultSet.getString("name"));
+				lCompany.add(company);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

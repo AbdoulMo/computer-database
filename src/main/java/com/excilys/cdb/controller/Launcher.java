@@ -1,6 +1,6 @@
-package com.excilys.training.java.controller;
+package com.excilys.cdb.controller;
 
-import com.excilys.training.java.ui.Cli;
+import com.excilys.cdb.vue.Cli;
 
 public class Launcher {
 

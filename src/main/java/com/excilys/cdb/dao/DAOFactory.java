@@ -1,10 +1,10 @@
-package com.excilys.training.java.dao;
+package com.excilys.cdb.dao;
 
 import java.io.*;
 import java.util.Properties;
 
-import com.excilys.training.java.dao.interfaces.*;
-import com.excilys.training.java.dao.jdbc.*;
+import com.excilys.cdb.interfaces.IDAOCompany;
+import com.excilys.cdb.interfaces.IDAOComputer;
 
 public class DAOFactory {
 
@@ -15,7 +15,7 @@ public class DAOFactory {
 	 * and store them in the properties variable
 	 */
 	static {
-		try (FileInputStream in = new FileInputStream("WebContent/WEB-INF/db.properties")) {
+		try (FileInputStream in = new FileInputStream("src/main/ressources/database.properties")) {
 			properties.load(in);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

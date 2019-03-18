@@ -6,7 +6,16 @@
 	<artifactId>computer-database</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-
+	<properties>
+		<mysql-connector>8.0.15</mysql-connector>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector}</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

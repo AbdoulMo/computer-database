@@ -1,16 +1,16 @@
-package com.excilys.training.java.controller;
+package com.excilys.cdb.controller;
 
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import com.excilys.training.java.dao.DAOFactory;
-import com.excilys.training.java.dao.interfaces.IDAOCompany;
-import com.excilys.training.java.dao.interfaces.IDAOComputer;
-import com.excilys.training.java.modele.Company;
-import com.excilys.training.java.modele.Computer;
-import com.excilys.training.java.ui.Cli;
+import com.excilys.cdb.dao.DAOFactory;
+import com.excilys.cdb.interfaces.IDAOCompany;
+import com.excilys.cdb.interfaces.IDAOComputer;
+import com.excilys.cdb.modele.Company;
+import com.excilys.cdb.modele.Computer;
+import com.excilys.cdb.vue.Cli;
 
 public class ControllerCLI {
 
@@ -24,8 +24,8 @@ public class ControllerCLI {
 
 	public ControllerCLI(Cli cli) {
 		this.cli = cli;
-		DAOFactory.getDAOComputer("jdbc");
-		DAOFactory.getDAOCompany("jdbc");
+		computerDAO = DAOFactory.getDAOComputer("jdbc");
+		companyDAO = DAOFactory.getDAOCompany("jdbc");
 	}
 
 	public boolean isLeaveApp() {

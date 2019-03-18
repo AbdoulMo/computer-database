@@ -3,10 +3,6 @@ package com.excilys.cdb.vue;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.excilys.cdb.dao.JDBCCompany;
-import com.excilys.cdb.dao.JDBCComputer;
-import com.excilys.cdb.interfaces.IDAOCompany;
-import com.excilys.cdb.interfaces.IDAOComputer;
 import com.excilys.cdb.modele.Company;
 import com.excilys.cdb.modele.Computer;
 
