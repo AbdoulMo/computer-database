@@ -1,8 +1,6 @@
 package com.excilys.training.java.modele;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class Computer {
 
