@@ -1,4 +1,4 @@
-package com.excilys.training.java.services.jdbc;
+package com.excilys.cdb.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.excilys.training.java.modele.Company;
-import com.excilys.training.java.services.interfaces.IDAOCompany;
+import com.excilys.cdb.interfaces.IDAOCompany;
+import com.excilys.cdb.modele.Company;
 
 public class JDBCCompany implements IDAOCompany {
 

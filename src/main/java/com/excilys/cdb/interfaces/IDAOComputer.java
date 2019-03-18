@@ -1,8 +1,8 @@
-package com.excilys.training.java.services.interfaces;
+package com.excilys.cdb.interfaces;
 
 import java.util.List;
 
-import com.excilys.training.java.modele.Computer;
+import com.excilys.cdb.modele.Computer;
 
 public interface IDAOComputer {
 

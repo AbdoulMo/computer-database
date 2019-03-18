@@ -1,8 +1,8 @@
-package com.excilys.training.java.services.interfaces;
+package com.excilys.cdb.interfaces;
 
 import java.util.List;
 
-import com.excilys.training.java.modele.Company;
+import com.excilys.cdb.modele.Company;
 
 public interface IDAOCompany {
 

@@ -1,4 +1,4 @@
-package com.excilys.training.java.services.jdbc;
+package com.excilys.cdb.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.excilys.training.java.modele.Computer;
-import com.excilys.training.java.services.interfaces.IDAOComputer;
+import com.excilys.cdb.interfaces.IDAOComputer;
+import com.excilys.cdb.modele.Computer;
 
 public class JDBCComputer implements IDAOComputer {
 
@@ -45,7 +45,7 @@ public class JDBCComputer implements IDAOComputer {
 
 	@Override
 	public List<Computer> getAllComputers() {
-		List<Computer> lComputer = new ArrayList<>();
+		List<Computer> lComputer = new ArrayList<Computer>();
 		query = "SELECT * FROM computer";
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
 			preparedStatement = conn.prepareStatement(query);

@@ -1,4 +1,4 @@
-package com.excilys.training.java.ui;
+package com.excilys.cdb.vue;
 
 import java.sql.Date;
 import java.text.Format;
@@ -7,12 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.excilys.training.java.modele.Company;
-import com.excilys.training.java.modele.Computer;
-import com.excilys.training.java.services.interfaces.IDAOCompany;
-import com.excilys.training.java.services.interfaces.IDAOComputer;
-import com.excilys.training.java.services.jdbc.JDBCCompany;
-import com.excilys.training.java.services.jdbc.JDBCComputer;
+import com.excilys.cdb.dao.JDBCCompany;
+import com.excilys.cdb.dao.JDBCComputer;
+import com.excilys.cdb.interfaces.IDAOCompany;
+import com.excilys.cdb.interfaces.IDAOComputer;
+import com.excilys.cdb.modele.Company;
+import com.excilys.cdb.modele.Computer;
 
 public class Cli {
 

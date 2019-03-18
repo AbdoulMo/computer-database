@@ -1,4 +1,4 @@
-package com.excilys.training.java.modele;
+package com.excilys.cdb.modele;
 
 public class Company {
 
