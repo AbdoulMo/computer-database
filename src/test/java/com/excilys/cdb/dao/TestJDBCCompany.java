@@ -11,7 +11,7 @@ import com.excilys.cdb.interfaces.IDAOCompany;
 import com.excilys.cdb.modele.Company;
 
 public class TestJDBCCompany {
-	
+
 	private static IDAOCompany jdbcCompany;
 
 	@BeforeClass
@@ -24,10 +24,14 @@ public class TestJDBCCompany {
 		Company c1 = jdbcCompany.getCompany(1);
 		assertEquals(1, c1.getId());
 		assertEquals("Apple Inc.", c1.getName());
-		
-		Company c2 = jdbcCompany.getCompany(1_000_000);
+
+		Company c2 = jdbcCompany.getCompany(-1);
 		assertEquals(0, c2.getId());
 		assertNull(c2.getName());
+
+		Company c3 = jdbcCompany.getCompany(1_000_000);
+		assertEquals(0, c3.getId());
+		assertNull(c3.getName());
 	}
 
 	@Test
