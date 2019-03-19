@@ -1,6 +1,7 @@
 package com.excilys.cdb.vue;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.excilys.cdb.modele.Company;
@@ -21,16 +22,24 @@ public class Cli {
 				+ "6: Supprimer un ordinateur.\n" + "7: Quitter.");
 	}
 
-	public void displayComputerList(ArrayList<Computer> computerList) {
-		for (Computer pc : computerList) {
-			System.out.println(pc);
+	public void displayList(List<Computer> list) {
+		for (Object o : list) {
+			System.out.println(o);
 		}
 	}
 
-	public void displayCompanyList(ArrayList<Company> companyList) {
+	public void displayComputerList(List<Computer> computerList) {
+		for (Computer pc : computerList) {
+			System.out.println(pc);
+		}
+		System.out.println("\n");
+	}
+
+	public void displayCompanyList(List<Company> companyList) {
 		for (Company c : companyList) {
 			System.out.println(c);
 		}
+		System.out.println("\n");
 	}
 
 	public int askComputerID() {
