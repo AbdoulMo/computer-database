@@ -130,4 +130,8 @@ public class Cli {
 	public void invelidInput() {
 		System.out.println("Choix invalide veuillez réessayer !");
 	}
+	
+	public void invalidDateInput() {
+		System.out.println("Format de la date entré incorrecte valeur mise à jour à null !");
+	}
 }

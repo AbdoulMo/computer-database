@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.excilys.cdb.dao.DAOFactory;
 import com.excilys.cdb.interfaces.IDAOCompany;
 import com.excilys.cdb.interfaces.IDAOComputer;
@@ -14,6 +16,8 @@ import com.excilys.cdb.vue.Cli;
 import com.excilys.cdb.vue.Paging;
 
 public class ControllerCLI {
+
+	private final static Logger logger = Logger.getLogger(ControllerCLI.class);
 
 	private IDAOComputer computerDAO;
 	private IDAOCompany companyDAO;
@@ -61,39 +65,56 @@ public class ControllerCLI {
 		return computerDAO.deleteComputer(id);
 	}
 
-	private Date parseInputDate(String date) {
+	private Date parseInputDate(String date) throws ParseException {
 		Date parsedDate = null;
-		try {
-			java.util.Date utilDate = new SimpleDateFormat("yyyy-mm-dd").parse(date);
-			parsedDate = new Date(utilDate.getTime());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		java.util.Date utilDate = new SimpleDateFormat("yyyy-mm-dd").parse(date);
+		parsedDate = new Date(utilDate.getTime());
 		return parsedDate;
 	}
 
 	private int updateComputer(Computer computer, ArrayList<String> params) {
-		switch (Integer.parseInt(params.get(1))) {
+		int updateOption = 0;
+		try {
+			updateOption = Integer.parseInt(params.get(1));
+		} catch (NumberFormatException e) {
+			logger.error("Invalid update option !", e);
+		}
+		switch (updateOption) {
 		case 1:
 			String name = params.get(2);
 			computer.setName(name);
 			break;
 		case 2:
-			Date dateI = parseInputDate(params.get(2));
-			computer.setIntroduced(dateI);
+			Date dateI = null;
+			try {
+				parseInputDate(params.get(2));
+				computer.setIntroduced(dateI);
+			} catch (ParseException e1) {
+				logger.error("Invalid input date format !", e1);
+			}
 			break;
 		case 3:
-			Date dateD = parseInputDate(params.get(2));
-			computer.setDiscontinued(dateD);
+			Date dateD = null;
+			try {
+				parseInputDate(params.get(2));
+				computer.setDiscontinued(dateD);
+			} catch (ParseException e1) {
+				logger.error("Invalid input date format !", e1);
+			}
 			break;
 		case 4:
-			int id = Integer.parseInt(params.get(2));
-			computer.setManufacturer_id(id);
+			int id = 0;
+			try {
+				Integer.parseInt(params.get(2));
+				computer.setManufacturer_id(id);
+			} catch (NumberFormatException e) {
+				logger.error("Invalid manufacturer id !", e);
+			}
 			break;
 		default:
 			break;
 		}
+		this.cli.updatedComputer();
 		return computerDAO.updateComputer(computer);
 	}
 
@@ -162,8 +183,16 @@ public class ControllerCLI {
 			Computer computer = new Computer();
 			ArrayList<String> computerParams = this.cli.getComputerParams();
 			computer.setName(computerParams.get(1));
-			computer.setIntroduced(parseInputDate(computerParams.get(2)));
-			computer.setDiscontinued(parseInputDate(computerParams.get(3)));
+			try {
+				computer.setIntroduced(parseInputDate(computerParams.get(2)));
+			} catch (ParseException e) {
+				logger.error("Invalid input date format !", e);
+			}
+			try {
+				computer.setDiscontinued(parseInputDate(computerParams.get(3)));
+			} catch (ParseException e) {
+				logger.error("Invalid input date format !", e);
+			}
 			computer.setManufacturer_id(Integer.parseInt(computerParams.get(4)));
 			this.createComputer(computer);
 			this.cli.createdComputer();
@@ -179,7 +208,6 @@ public class ControllerCLI {
 					this.updateComputer(computer, updateParams);
 				}
 			}
-			this.updateComputer(computer, updateParams);
 			break;
 		case 6:
 			computer = this.computerDAO.getComputer(this.cli.askComputerID());
@@ -199,7 +227,12 @@ public class ControllerCLI {
 	public void runApp() {
 		while (!this.isLeaveApp()) {
 			this.cli.displayMenu();
-			this.action(Integer.parseInt(this.cli.getInput()));
+			try {
+				this.action(Integer.parseInt(this.cli.getInput()));
+			} catch (NumberFormatException e) {
+				this.cli.invelidInput();
+				logger.error("Invalid menu input !", e);
+			}
 		}
 	}
 }
