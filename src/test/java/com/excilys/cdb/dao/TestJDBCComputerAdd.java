@@ -17,7 +17,7 @@ public class TestJDBCComputerAdd {
 
 	private static IDAOComputer jdbcComputer;
 	ArrayList<Computer> computerList;
-	Computer computer;
+	Computer computer = new Computer();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
