@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.excilys.cdb.dao.DAOFactory;
+import com.excilys.cdb.dao.DatabaseParam;
 import com.excilys.cdb.interfaces.IDAOCompany;
 import com.excilys.cdb.interfaces.IDAOComputer;
-import com.excilys.cdb.modele.Company;
-import com.excilys.cdb.modele.Computer;
+import com.excilys.cdb.model.Company;
+import com.excilys.cdb.model.Computer;
 import com.excilys.cdb.vue.Cli;
 import com.excilys.cdb.vue.Paging;
 
@@ -29,8 +29,8 @@ public class ControllerCLI {
 
 	public ControllerCLI(Cli cli) {
 		this.cli = cli;
-		computerDAO = DAOFactory.getDAOComputer("jdbc");
-		companyDAO = DAOFactory.getDAOCompany("jdbc");
+		computerDAO = DatabaseParam.getDAOComputer("jdbc");
+		companyDAO = DatabaseParam.getDAOCompany("jdbc");
 	}
 
 	public boolean isLeaveApp() {

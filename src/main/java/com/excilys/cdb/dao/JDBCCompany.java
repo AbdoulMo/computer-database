@@ -3,56 +3,45 @@ package com.excilys.cdb.dao;
 import java.sql.*;
 import java.util.*;
 
-import com.excilys.cdb.interfaces.IDAOCompany;
-import com.excilys.cdb.modele.Company;
+import org.apache.log4j.Logger;
 
+import com.excilys.cdb.model.Company;
+import com.excilys.cdb.model.CompanyMapper;
 
-public class JDBCCompany implements IDAOCompany {
+public class JDBCCompany {
 
-	private Properties properties;
-	private static final String QUERY_GET_COMPANY = "SELECT * FROM company WHERE id = ?";
-	private static final String QUERY_GET_ALL_COMPANY = "SELECT * FROM company";
+	private DatabaseParam databaseParam = DatabaseParam.getInstance();
+	private final static Logger logger = Logger.getLogger(JDBCCompany.class);
+	private static final String QUERY_GET_COMPANY_BY_ID = "SELECT id, name FROM company WHERE id = ?";
+	private static final String QUERY_GET_ALL_COMPANY = "SELECT id, name FROM company";
 	private ResultSet resultSet;
 
-	public JDBCCompany(Properties props) {
-		this.properties = props;
-	}
-
-	@Override
-	public Company getCompany(int id) {
-		Company company = new Company();
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
-				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPANY);) {
+	public Optional<Company> getCompanyByID(int id) {
+		Company company = null;
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPANY_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				company.setId(resultSet.getInt("id"));
-				company.setName(resultSet.getString("name"));
-			}
+			company = CompanyMapper.resultSetToCompany(resultSet);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to get company with specified ID !", e);
 		}
-		return company;
+		return Optional.ofNullable(company);
 	}
 
-	@Override
 	public ArrayList<Company> getAllCompany() {
 		ArrayList<Company> lCompany = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPANY);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Company company = new Company();
-				company.setId(resultSet.getInt("id"));
-				company.setName(resultSet.getString("name"));
+				Company company = CompanyMapper.resultSetToCompany(resultSet);
 				lCompany.add(company);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to get all company !", e);
 		}
 		return lCompany;
 	}

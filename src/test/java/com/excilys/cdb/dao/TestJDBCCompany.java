@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.excilys.cdb.interfaces.IDAOCompany;
-import com.excilys.cdb.modele.Company;
+import com.excilys.cdb.model.Company;
 
 public class TestJDBCCompany {
 
@@ -16,7 +16,7 @@ public class TestJDBCCompany {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		jdbcCompany = DAOFactory.getDAOCompany("jdbc");
+		jdbcCompany = DatabaseParam.getDAOCompany("jdbc");
 	}
 
 	@Test

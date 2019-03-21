@@ -3,121 +3,99 @@ package com.excilys.cdb.dao;
 import java.sql.*;
 import java.util.*;
 
-import com.excilys.cdb.interfaces.IDAOComputer;
-import com.excilys.cdb.modele.Computer;
+import org.apache.log4j.Logger;
 
-public class JDBCComputer implements IDAOComputer {
+import com.excilys.cdb.model.Computer;
+import com.excilys.cdb.model.ComputerMapper;
 
-	private Properties properties;
-	private static final String QUERY_GET_COMPUTER = "SELECT * FROM computer WHERE id = ?";
-	private static final String QUERY_GET_ALL_COMPUTERS = "SELECT * FROM computer";
+public class JDBCComputer {
+
+	private DatabaseParam databaseParam = DatabaseParam.getInstance();
+	private final static Logger logger = Logger.getLogger(JDBCCompany.class);
+	private static final String QUERY_GET_COMPUTER_BY_ID = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE id = ?";
+	private static final String QUERY_GET_ALL_COMPUTERS = "SELECT id, name, introduced, discontinued, company_id FROM computer";
 	private static final String QUERY_ADD_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES (?,?,?,?)";
 	private static final String QUERY_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
 	private static final String QUERY_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
 	private ResultSet resultSet;
 
-	public JDBCComputer(Properties props) {
-		this.properties = props;
-	}
-
-	@Override
-	public Computer getComputer(int id) {
-		Computer c = new Computer();
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
-				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER);) {
+	public Optional<Computer> getComputerByID(int id) {
+		Computer computer = null;
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				c.setId(resultSet.getInt("id"));
-				c.setName(resultSet.getString("name"));
-				c.setIntroduced(resultSet.getDate("introduced"));
-				c.setDiscontinued(resultSet.getDate("discontinued"));
-				c.setManufacturer_id(resultSet.getInt("company_id"));
-			}
+			computer = ComputerMapper.resultSetToComputer(resultSet);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to get computer with specified ID !", e);
 		}
-		return c;
+		return Optional.ofNullable(computer);
 	}
 
-	@Override
 	public ArrayList<Computer> getAllComputers() {
 		ArrayList<Computer> lComputer = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPUTERS);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Computer c = new Computer();
-				c.setId(resultSet.getInt("id"));
-				c.setName(resultSet.getString("name"));
-				c.setIntroduced(resultSet.getDate("introduced"));
-				c.setDiscontinued(resultSet.getDate("discontinued"));
-				c.setManufacturer_id(resultSet.getInt("company_id"));
-				lComputer.add(c);
+				Computer computer = ComputerMapper.resultSetToComputer(resultSet);
+				lComputer.add(computer);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to get all computer !", e);
 		}
 		return lComputer;
 	}
 
-	@Override
-	public int addComputer(Computer c) {
+	public boolean addComputer(Computer computer) {
 		int result = 0;
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_ADD_COMPUTER);) {
-			preparedStatement.setString(1, c.getName());
-			preparedStatement.setDate(2, c.getIntroduced());
-			preparedStatement.setDate(3, c.getDiscontinued());
-			if (c.getManufacturer_id() == 0) {
+			preparedStatement.setString(1, computer.getName());
+			preparedStatement.setDate(2, computer.getIntroduced());
+			preparedStatement.setDate(3, computer.getDiscontinued());
+			if (computer.getManufacturer_id() == 0) {
 				preparedStatement.setBinaryStream(4, null);
 			} else {
-				preparedStatement.setInt(4, c.getManufacturer_id());
+				preparedStatement.setInt(4, computer.getManufacturer_id());
 			}
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to add a new computer !", e);
 		}
-		return result;
+		return result == 1 ? true : false;
 	}
 
-	@Override
-	public int deleteComputer(int id) {
+	public boolean deleteComputer(int id) {
 		int result = 0;
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_DELETE_COMPUTER);) {
 			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to delete a computer !", e);
 		}
-		return result;
+		return result == 1 ? true : false;
 	}
 
-	@Override
-	public int updateComputer(Computer c) {
+	public boolean updateComputer(Computer computer) {
 		int result = 0;
-		try (Connection conn = DriverManager.getConnection(properties.getProperty("jdbc.url"),
-				properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
+				databaseParam.getPassword());
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_COMPUTER);) {
-			preparedStatement.setString(1, c.getName());
-			preparedStatement.setDate(2, c.getIntroduced());
-			preparedStatement.setDate(3, c.getDiscontinued());
-			preparedStatement.setInt(4, c.getManufacturer_id());
-			preparedStatement.setInt(5, c.getId());
+			preparedStatement.setString(1, computer.getName());
+			preparedStatement.setDate(2, computer.getIntroduced());
+			preparedStatement.setDate(3, computer.getDiscontinued());
+			preparedStatement.setInt(4, computer.getManufacturer_id());
+			preparedStatement.setInt(5, computer.getId());
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while trying to update a computer !", e);
 		}
-		return result;
+		return result == 1 ? true : false;
 	}
 }

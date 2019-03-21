@@ -11,19 +11,19 @@ public class TestDAOFactory {
 
 	@Test
 	public void testGetDAOCompany() {
-		IDAOCompany daoCompany = DAOFactory.getDAOCompany("jdbc");
+		IDAOCompany daoCompany = DatabaseParam.getDAOCompany("jdbc");
 		assertNotNull(daoCompany);
 
-		IDAOCompany daoCompany2 = DAOFactory.getDAOCompany("fghjk");
+		IDAOCompany daoCompany2 = DatabaseParam.getDAOCompany("fghjk");
 		assertNull(daoCompany2);
 	}
 
 	@Test
 	public void testGetDAOComputer() {
-		IDAOComputer daoComputer = DAOFactory.getDAOComputer("jdbc");
+		IDAOComputer daoComputer = DatabaseParam.getDAOComputer("jdbc");
 		assertNotNull(daoComputer);
 
-		IDAOComputer daoComputer2 = DAOFactory.getDAOComputer("azert");
+		IDAOComputer daoComputer2 = DatabaseParam.getDAOComputer("azert");
 		assertNull(daoComputer2);
 	}
 

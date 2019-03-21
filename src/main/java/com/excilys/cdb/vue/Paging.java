@@ -1,10 +1,11 @@
 package com.excilys.cdb.vue;
 
 import java.util.List;
-import java.util.ArrayList;
 
-import com.excilys.cdb.modele.Company;
-import com.excilys.cdb.modele.Computer;
+import com.excilys.cdb.model.Company;
+import com.excilys.cdb.model.Computer;
+
+import java.util.ArrayList;
 
 public class Paging {
 
