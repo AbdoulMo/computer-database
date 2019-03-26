@@ -27,7 +27,7 @@
 	<section id="main">
 		<div class="container">
 			<h1 id="homeTitle">
-				<c:out value="${sessionScope.computersFound}" />
+				<c:out value="${computersFound}" />
 				Computers found
 			</h1>
 			<div id="actions" class="form-horizontal">
@@ -41,7 +41,7 @@
 					</form>
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer.html">Add
+					<a class="btn btn-success" id="addComputer" href="addComputer">Add
 						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
@@ -77,7 +77,7 @@
 				</thead>
 				<!-- Browse attribute computers -->
 				<tbody id="results">
-					<c:forEach var="computer" items="${sessionScope.displayedComputer}">
+					<c:forEach var="computer" items="${displayedComputer}">
 						<tr>
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="0"></td>

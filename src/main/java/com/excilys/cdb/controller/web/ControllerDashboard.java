@@ -64,24 +64,13 @@ public class ControllerDashboard extends HttpServlet {
 		}
 		List<DTOComputer> displayedComputer = paging.showComputerList(page);
 
-		HttpSession session = request.getSession();
-		session.setAttribute("computersFound", dtoComputerList.size());
-		session.setAttribute("displayedComputer", displayedComputer);
-		session.setAttribute("currentPage", page);
-		session.setAttribute("numberOfPage", paging.getNumberOfPage());
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/web-ressources/views/dashboard.jsp");
-		rd.forward(request, response);
+		request.setAttribute("computersFound", dtoComputerList.size());
+		request.setAttribute("displayedComputer", displayedComputer);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("numberOfPage", paging.getNumberOfPage());
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/web-ressources/views/dashboard.jsp");
+		requestDispatcher.forward(request, response);
 
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
