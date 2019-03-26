@@ -1,62 +1,60 @@
 package com.excilys.cdb.model;
 
-import java.sql.Date;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Computer {
+public class DTOComputer {
 
-	public static class ComputerBuilder {
+	public static class DTOComputerBuilder {
 
 		private int id;
 		private String name;
-		private Date introduced;
-		private Date discontinued;
+		private String introduced;
+		private String discontinued;
 		private int manufacturer_id;
 
-		public ComputerBuilder withID(int id) {
+		public DTOComputerBuilder withID(int id) {
 			this.id = id;
 			return this;
 		}
 
-		public ComputerBuilder withName(String name) {
+		public DTOComputerBuilder withName(String name) {
 			this.name = name;
 			return this;
 		}
 
-		public ComputerBuilder withIntroduced(Date inDate) {
-			introduced = inDate;
+		public DTOComputerBuilder withIntroduced(String introduced) {
+			this.introduced = introduced;
 			return this;
 		}
 
-		public ComputerBuilder withDiscontinued(Date diDate) {
-			discontinued = diDate;
+		public DTOComputerBuilder withDiscontinued(String discontinued) {
+			this.discontinued = discontinued;
 			return this;
 		}
 
-		public ComputerBuilder withManufacturerID(int manufacturer_id) {
-			this.manufacturer_id = manufacturer_id;
+		public DTOComputerBuilder withManufacturerID(int manufacturer_ID) {
+			this.manufacturer_id = manufacturer_ID;
 			return this;
 		}
 
-		public Computer build() {
-			Computer computer = new Computer();
-			computer.id = this.id;
-			computer.name = this.name;
-			computer.introduced = this.introduced;
-			computer.discontinued = this.discontinued;
-			computer.manufacturer_id = this.manufacturer_id;
-			return computer;
+		public DTOComputer build() {
+			DTOComputer dtoComputer = new DTOComputer();
+			dtoComputer.id = this.id;
+			dtoComputer.name = this.name;
+			dtoComputer.introduced = this.introduced;
+			dtoComputer.discontinued = this.discontinued;
+			dtoComputer.manufacturer_id = this.manufacturer_id;
+			return dtoComputer;
 		}
 	}
 
 	private int id;
 	private String name;
-	private Date introduced;
-	private Date discontinued;
+	private String introduced;
+	private String discontinued;
 	private int manufacturer_id;
 
-	private Computer() {
+	private DTOComputer() {
 
 	}
 
@@ -76,19 +74,19 @@ public class Computer {
 		this.name = name;
 	}
 
-	public Date getIntroduced() {
+	public String getIntroduced() {
 		return introduced;
 	}
 
-	public void setIntroduced(Date introduced) {
+	public void setIntroduced(String introduced) {
 		this.introduced = introduced;
 	}
 
-	public Date getDiscontinued() {
+	public String getDiscontinued() {
 		return discontinued;
 	}
 
-	public void setDiscontinued(Date discontinued) {
+	public void setDiscontinued(String discontinued) {
 		this.discontinued = discontinued;
 	}
 

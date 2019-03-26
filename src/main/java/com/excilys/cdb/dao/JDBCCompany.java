@@ -6,7 +6,7 @@ import java.util.*;
 import org.apache.log4j.Logger;
 
 import com.excilys.cdb.model.Company;
-import com.excilys.cdb.model.CompanyMapper;
+import com.excilys.cdb.model.MapperCompany;
 
 public class JDBCCompany {
 
@@ -23,7 +23,7 @@ public class JDBCCompany {
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPANY_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			company = CompanyMapper.resultSetToCompany(resultSet);
+			company = MapperCompany.resultSetToCompany(resultSet);
 		} catch (SQLException e) {
 			logger.error("Error while trying to get company with specified ID !", e);
 		}
@@ -37,7 +37,7 @@ public class JDBCCompany {
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPANY);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Company company = CompanyMapper.resultSetToCompany(resultSet);
+				Company company = MapperCompany.resultSetToCompany(resultSet);
 				lCompany.add(company);
 			}
 		} catch (SQLException e) {

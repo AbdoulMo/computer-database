@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 public class DatabaseParam {
 
-	private static Properties properties;
+	private static Properties properties = new Properties();
 	private String JDBCurl;
 	private String username;
 	private String password;
@@ -15,16 +15,19 @@ public class DatabaseParam {
 	private final static DatabaseParam _instance = new DatabaseParam();
 
 	private DatabaseParam() {
-		try (FileInputStream in = new FileInputStream("src/main/ressources/database.properties")) {
+		try (InputStream in = DatabaseParam.class.getResourceAsStream("/database.properties")) {
 			properties.load(in);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			this.JDBCurl = properties.getProperty("jdbc.url");
+			this.username = properties.getProperty("username");
+			this.password = properties.getProperty("password");
 		} catch (FileNotFoundException e) {
 			logger.error("Cannot find property file for database.", e);
 		} catch (IOException e) {
 			logger.error("Cannot load or close property file stream.", e);
-		}
-		this.JDBCurl = properties.getProperty("jdbc.url");
-		this.username = properties.getProperty("username");
-		this.password = properties.getProperty("password");
+		} catch (ClassNotFoundException e) {
+			logger.error("Cannot load mysql Driver", e);
+		}		
 	}
 
 	public static DatabaseParam getInstance() {

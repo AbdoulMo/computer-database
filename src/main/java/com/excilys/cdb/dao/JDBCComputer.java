@@ -6,7 +6,7 @@ import java.util.*;
 import org.apache.log4j.Logger;
 
 import com.excilys.cdb.model.Computer;
-import com.excilys.cdb.model.ComputerMapper;
+import com.excilys.cdb.model.MapperComputer;
 
 public class JDBCComputer {
 
@@ -26,7 +26,7 @@ public class JDBCComputer {
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			computer = ComputerMapper.resultSetToComputer(resultSet);
+			computer = MapperComputer.resultSetToComputer(resultSet);
 		} catch (SQLException e) {
 			logger.error("Error while trying to get computer with specified ID !", e);
 		}
@@ -40,11 +40,11 @@ public class JDBCComputer {
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPUTERS);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Computer computer = ComputerMapper.resultSetToComputer(resultSet);
+				Computer computer = MapperComputer.resultSetToComputer(resultSet);
 				lComputer.add(computer);
 			}
-		} catch (SQLException e) {
-			logger.error("Error while trying to get all computer !", e);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return lComputer;
 	}

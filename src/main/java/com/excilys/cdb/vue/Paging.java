@@ -3,18 +3,33 @@ package com.excilys.cdb.vue;
 import java.util.List;
 
 import com.excilys.cdb.model.Company;
-import com.excilys.cdb.model.Computer;
+import com.excilys.cdb.model.DTOComputer;
 
 import java.util.ArrayList;
 
 public class Paging {
 
+	private int numberOfPage;
+	private int maxDisplay;
 	private int startIndex;
 	private int endIndex;
 
-	public Paging() {
+	private ArrayList<DTOComputer> computerList;
+
+	public Paging(ArrayList<DTOComputer> computerList) {
+		this.computerList = computerList;
+		this.maxDisplay = 10;
 		this.startIndex = 0;
-		this.endIndex = 10;
+		this.endIndex = maxDisplay;
+		this.numberOfPage = setNumberOfPage();
+	}
+
+	public int getMaxDisplay() {
+		return maxDisplay;
+	}
+
+	public void setMaxDisplay(int maxDisplay) {
+		this.maxDisplay = maxDisplay;
 	}
 
 	public int getStartIndex() {
@@ -33,11 +48,53 @@ public class Paging {
 		this.endIndex = endIndex;
 	}
 
-	public List<Computer> showComputerList(ArrayList<Computer> computerList) {
+	public int getNumberOfPage() {
+		return numberOfPage;
+	}
+
+	public int setNumberOfPage() {
+		if ((computerList.size() % maxDisplay) != 0) {
+			return this.numberOfPage = (computerList.size() / maxDisplay) + 1;
+		} else if (computerList.size() % maxDisplay == computerList.size()) {
+			return this.numberOfPage = 1;
+		}
+		return this.numberOfPage = (computerList.size() / maxDisplay);
+	}
+
+	public List<DTOComputer> showComputerList(int pageIndex) {
+		this.startIndex = (pageIndex * this.maxDisplay) - this.maxDisplay;
+		this.endIndex += this.startIndex;
+		if (this.endIndex > computerList.size()) {
+			this.endIndex = computerList.size() ;
+		}
 		return computerList.subList(startIndex, endIndex);
 	}
 
-	public List<Company> showCompanyList(ArrayList<Company> objectList) {
-		return objectList.subList(startIndex, endIndex);
-	}
+//	public void handlePagingIndex(int requiredPage, int listSize) {
+//		if (this.pageIndex > requiredPage) {
+//			if (startIndex > maxDisplay) {
+//				startIndex -= maxDisplay;
+//				endIndex -= maxDisplay;
+//				pageIndex--;
+//			} else {
+//				while (startIndex > 0) {
+//					startIndex -= 1;
+//					endIndex -= 1;
+//					pageIndex--;
+//				}
+//			}
+//		} else if (this.pageIndex < requiredPage) {
+//			if (endIndex + maxDisplay < listSize) {
+//				startIndex += maxDisplay;
+//				endIndex += maxDisplay;
+//				pageIndex++;
+//			} else {
+//				while (endIndex <= listSize - 1) {
+//					startIndex += 1;
+//					endIndex += 1;
+//				}
+//				pageIndex++;
+//			}
+//		}
+//	}
 }

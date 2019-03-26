@@ -5,6 +5,13 @@
 	version="3.0">
 	<display-name>src</display-name>
 	<welcome-file-list>
-		<welcome-file>controllerDashboard</welcome-file>
+		<welcome-file>dashboard</welcome-file>
 	</welcome-file-list>
+	
+	<jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <include-prelude>/web-ressources/views/taglib.jsp</include-prelude>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

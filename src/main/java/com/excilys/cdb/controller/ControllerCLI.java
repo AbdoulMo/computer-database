@@ -118,41 +118,13 @@ public class ControllerCLI {
 		return computerDAO.updateComputer(computer);
 	}
 
-	private boolean handlePagingIndex(Paging p, int listSize) {
-		System.out.println("Entrez (s) pour afficher les suivants, (p) pour les précédents ou (q) pour quitter");
-		String command = this.cli.getInput();
-		if (command.equals("q")) {
-			return false;
-		} else if (command.equals("p")) {
-			if (p.getStartIndex() > 10) {
-				p.setStartIndex(p.getStartIndex() - 10);
-				p.setEndIndex(p.getEndIndex() - 10);
-			} else {
-				while (p.getStartIndex() > 0) {
-					p.setStartIndex(p.getStartIndex() - 1);
-					p.setEndIndex(p.getEndIndex() - 1);
-				}
-			}
-		} else if (command.equals("s")) {
-			if (p.getEndIndex() + 10 < listSize) {
-				p.setStartIndex(p.getStartIndex() + 10);
-				p.setEndIndex(p.getEndIndex() + 10);
-			} else {
-				while (p.getEndIndex() <= listSize - 1) {
-					p.setStartIndex(p.getStartIndex() + 1);
-					p.setEndIndex(p.getEndIndex() + 1);
-				}
-			}
-		}
-		return true;
-	}
-
 	private void displayComputerList(ArrayList<Computer> computerList) {
 		Paging p = new Paging();
 		boolean display = true;
 		while (display) {
 			this.cli.displayComputerList(p.showComputerList(computerList));
-			display = this.handlePagingIndex(p, computerList.size());
+			String action = this.cli.getInput();
+			display = p.handlePagingIndex(action, computerList.size());
 		}
 	}
 
@@ -161,7 +133,8 @@ public class ControllerCLI {
 		boolean display = true;
 		while (display) {
 			this.cli.displayCompanyList(p.showCompanyList(companyList));
-			display = this.handlePagingIndex(p, companyList.size());
+			String action = this.cli.getInput();
+			display = p.handlePagingIndex(action, companyList.size());
 		}
 	}
 
