@@ -19,8 +19,8 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard.html"> Application -
-				Computer Database </a>
+			<a class="navbar-brand" href="dashboard"> Application - Computer
+				Database </a>
 		</div>
 	</header>
 
@@ -85,7 +85,7 @@
 										value="${computer.getName()}" /></a></td>
 							<td><c:out value="${computer.getIntroduced()}" /></td>
 							<td><c:out value="${computer.getDiscontinued()}" /></td>
-							<td>ManufacturerName</td>
+							<td><c:out value="${computer.getManufacturer_name()}" /></td>
 
 						</tr>
 					</c:forEach>
@@ -112,10 +112,10 @@
 			</ul>
 
 			<!-- <div class="btn-group btn-group-sm pull-right" role="group">
-				<a href="?maxDisplay=10"><button type="button"
-						class="btn btn-default">10</button></a> <a href="?maxDisplay=50"><button
+				<a href="?nbComputerDisplayed=10"><button type="button"
+						class="btn btn-default">10</button></a> <a href="?nbComputerDisplayed=50"><button
 						type="button" class="btn btn-default">50</button></a> <a
-					href="?maxDisplay=100"><button type="button"
+					href="?nbComputerDisplayed=100"><button type="button"
 						class="btn btn-default">100</button></a>
 			</div> -->
 		</div>

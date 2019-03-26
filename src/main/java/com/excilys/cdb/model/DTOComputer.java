@@ -10,7 +10,7 @@ public class DTOComputer {
 		private String name;
 		private String introduced;
 		private String discontinued;
-		private int manufacturer_id;
+		private String manufacturer_name;
 
 		public DTOComputerBuilder withID(int id) {
 			this.id = id;
@@ -32,8 +32,8 @@ public class DTOComputer {
 			return this;
 		}
 
-		public DTOComputerBuilder withManufacturerID(int manufacturer_ID) {
-			this.manufacturer_id = manufacturer_ID;
+		public DTOComputerBuilder withManufacturerName(String manufacturer_name) {
+			this.manufacturer_name = manufacturer_name;
 			return this;
 		}
 
@@ -43,7 +43,7 @@ public class DTOComputer {
 			dtoComputer.name = this.name;
 			dtoComputer.introduced = this.introduced;
 			dtoComputer.discontinued = this.discontinued;
-			dtoComputer.manufacturer_id = this.manufacturer_id;
+			dtoComputer.manufacturer_name = this.manufacturer_name;
 			return dtoComputer;
 		}
 	}
@@ -52,7 +52,7 @@ public class DTOComputer {
 	private String name;
 	private String introduced;
 	private String discontinued;
-	private int manufacturer_id;
+	private String manufacturer_name;
 
 	private DTOComputer() {
 
@@ -90,12 +90,12 @@ public class DTOComputer {
 		this.discontinued = discontinued;
 	}
 
-	public int getManufacturer_id() {
-		return manufacturer_id;
+	public String getManufacturer_name() {
+		return manufacturer_name;
 	}
 
-	public void setManufacturer_id(int manufacturer_id) {
-		this.manufacturer_id = manufacturer_id;
+	public void setManufacturer_name(String manufacturer_name) {
+		this.manufacturer_name = manufacturer_name;
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class DTOComputer {
 				.append("name", name)
 				.append("introduced", introduced)
 				.append("discontinued", discontinued)
-				.append("manufacturer_id", manufacturer_id)
+				.append("manufacturer_name", manufacturer_name)
 				.toString();
 	}
 }

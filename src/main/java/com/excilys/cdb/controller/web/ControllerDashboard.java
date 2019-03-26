@@ -49,12 +49,13 @@ public class ControllerDashboard extends HttpServlet {
 		}
 		paging = new Paging(dtoComputerList);
 
+		
+//		int nbComputerDisplayed = 1;
+//		if (request.getParameter("nbComputerDisplayed") != null) {
+//			nbComputerDisplayed = Integer.parseInt(request.getParameter("nbComputerDisplayed"));
+//			paging.setMaxDisplay(nbComputerDisplayed);
+//		}
 		int page = 1;
-		int nbComputerDisplayed = 1;
-		if (request.getParameter("nbComputerDisplayed") != null) {
-			nbComputerDisplayed = Integer.parseInt(request.getParameter("nbComputerDisplayed"));
-			paging.setMaxDisplay(nbComputerDisplayed);
-		}
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 			if (page > paging.getNumberOfPage()) {

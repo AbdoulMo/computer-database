@@ -17,7 +17,7 @@ public class MapperComputer {
 				.build();
 	}
 	
-	public static DTOComputer objectToDTO(Computer computer) {
+	public static DTOComputer objectToDTO(Computer computer, Company company) {
 		Date introduceDate = computer.getIntroduced();
 		Date discontinuedDate = computer.getDiscontinued();
 		
@@ -26,7 +26,7 @@ public class MapperComputer {
 				.withName(computer.getName())
 				.withIntroduced(introduceDate == null ? "" : introduceDate.toString())
 				.withDiscontinued(discontinuedDate == null ? "" : discontinuedDate.toString())
-				.withManufacturerID(computer.getManufacturer_id())
+				.withManufacturerName(company == null ? "": company.getName())
 				.build();
 	}
 }
