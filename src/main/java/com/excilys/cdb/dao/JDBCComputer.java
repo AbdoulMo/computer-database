@@ -5,12 +5,12 @@ import java.util.*;
 
 import org.apache.log4j.Logger;
 
+import com.excilys.cdb.hikaricp.HikariCP;
 import com.excilys.cdb.model.Computer;
 import com.excilys.cdb.model.MapperComputer;
 
 public class JDBCComputer {
 
-	private DatabaseParam databaseParam = DatabaseParam.getInstance();
 	private final static Logger logger = Logger.getLogger(JDBCCompany.class);
 	private static final String QUERY_GET_COMPUTER_BY_ID = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE id = ?";
 	private static final String QUERY_GET_ALL_COMPUTERS = "SELECT id, name, introduced, discontinued, company_id FROM computer";
@@ -21,8 +21,7 @@ public class JDBCComputer {
 
 	public Optional<Computer> getComputerByID(int id) {
 		Computer computer = null;
-		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
-				databaseParam.getPassword());
+		try (Connection conn = HikariCP.getInstance().getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -35,8 +34,7 @@ public class JDBCComputer {
 
 	public ArrayList<Computer> getAllComputers() {
 		ArrayList<Computer> lComputer = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
-				databaseParam.getPassword());
+		try (Connection conn = HikariCP.getInstance().getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPUTERS);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -51,8 +49,7 @@ public class JDBCComputer {
 
 	public boolean addComputer(Computer computer) {
 		int result = 0;
-		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
-				databaseParam.getPassword());
+		try (Connection conn = HikariCP.getInstance().getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_ADD_COMPUTER);) {
 			preparedStatement.setString(1, computer.getName());
 			preparedStatement.setDate(2, computer.getIntroduced());
@@ -71,8 +68,7 @@ public class JDBCComputer {
 
 	public boolean deleteComputer(int id) {
 		int result = 0;
-		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
-				databaseParam.getPassword());
+		try (Connection conn = HikariCP.getInstance().getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_DELETE_COMPUTER);) {
 			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
@@ -84,8 +80,7 @@ public class JDBCComputer {
 
 	public boolean updateComputer(Computer computer) {
 		int result = 0;
-		try (Connection conn = DriverManager.getConnection(databaseParam.getJDBCurl(), databaseParam.getUsername(),
-				databaseParam.getPassword());
+		try (Connection conn = HikariCP.getInstance().getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_COMPUTER);) {
 			preparedStatement.setString(1, computer.getName());
 			preparedStatement.setDate(2, computer.getIntroduced());
