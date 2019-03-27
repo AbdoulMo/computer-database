@@ -1,6 +1,10 @@
 package com.excilys.cdb.services;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.excilys.cdb.dao.JDBCCompany;
 import com.excilys.cdb.dao.JDBCComputer;
@@ -14,16 +18,6 @@ public class ComputerServices {
 
 	private static JDBCComputer daoComputer = new JDBCComputer();
 	private static JDBCCompany daoCompany = new JDBCCompany();
-
-//	public DTOComputer getComputerByID(int id) throws DataNotFoundException {
-//		Optional<Computer> computer = daoComputer.getComputerByID(id);
-//		if (!computer.isPresent()) {
-//			throw new DataNotFoundException();
-//		} else {
-//			DTOComputer dtoComputer = MapperComputer.objectToDTO(computer.get());
-//			return dtoComputer;
-//		}
-//	}
 
 	public ArrayList<DTOComputer> getAllComputer() throws DataNotFoundException {
 		ArrayList<Computer> computerList = new ArrayList<>();
@@ -41,5 +35,35 @@ public class ComputerServices {
 			}
 			return dtoComputersList;
 		}
+	}
+
+	private Optional<Date> parseInputDate(String date) {
+		Date parsedDate = null;
+		java.util.Date utilDate = null;
+		try {
+			utilDate = new SimpleDateFormat("yyyy-mm-dd").parse(date);
+			parsedDate = new Date(utilDate.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return Optional.ofNullable(parsedDate);
+	}
+
+	public Boolean addComputer(String computerName, String introduced, String discontinued, String company_id) {
+		
+		Date introducedDate = null, discontinuedDate = null;
+		int companyId = 0;
+		companyId = new String("").equals(company_id)  ? Integer.parseInt(company_id) : 0;
+		introducedDate = parseInputDate(introduced).get();
+		discontinuedDate = parseInputDate(discontinued).get();
+		
+		Computer computer = new Computer.ComputerBuilder()
+				.withName(computerName)
+				.withIntroduced(introducedDate)
+				.withDiscontinued(discontinuedDate)
+				.withManufacturerID(companyId)
+				.build();
+		
+		return daoComputer.addComputer(computer);
 	}
 }

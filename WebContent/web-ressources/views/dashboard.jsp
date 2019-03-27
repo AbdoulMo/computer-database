@@ -110,14 +110,7 @@
 				<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 				</a></li>
 			</ul>
-
-			<!-- <div class="btn-group btn-group-sm pull-right" role="group">
-				<a href="?nbComputerDisplayed=10"><button type="button"
-						class="btn btn-default">10</button></a> <a href="?nbComputerDisplayed=50"><button
-						type="button" class="btn btn-default">50</button></a> <a
-					href="?nbComputerDisplayed=100"><button type="button"
-						class="btn btn-default">100</button></a>
-			</div> -->
+			
 		</div>
 	</footer>
 	<script

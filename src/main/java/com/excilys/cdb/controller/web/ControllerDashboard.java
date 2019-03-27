@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.excilys.cdb.exceptions.DataNotFoundException;
 import com.excilys.cdb.model.DTOComputer;
@@ -49,12 +48,6 @@ public class ControllerDashboard extends HttpServlet {
 		}
 		paging = new Paging(dtoComputerList);
 
-		
-//		int nbComputerDisplayed = 1;
-//		if (request.getParameter("nbComputerDisplayed") != null) {
-//			nbComputerDisplayed = Integer.parseInt(request.getParameter("nbComputerDisplayed"));
-//			paging.setMaxDisplay(nbComputerDisplayed);
-//		}
 		int page = 1;
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -70,7 +63,6 @@ public class ControllerDashboard extends HttpServlet {
 		request.setAttribute("numberOfPage", paging.getNumberOfPage());
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/web-ressources/views/dashboard.jsp");
 		requestDispatcher.forward(request, response);
-
 	}
 
 }
