@@ -61,7 +61,7 @@ public class ControllerAddComputer extends HttpServlet {
 		if (computerServices.addComputer(request.getParameter("computerName"), request.getParameter("introduced"),
 				request.getParameter("discontinued"), request.getParameter("companyId"))) {
 			doGet(request, response);
-		}else {
+		} else {
 			response.getWriter().write("Unable to add computer");
 		}
 	}

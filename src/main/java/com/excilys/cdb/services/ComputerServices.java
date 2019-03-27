@@ -51,14 +51,16 @@ public class ComputerServices {
 
 	public Boolean addComputer(String computerName, String introduced, String discontinued, String company_id) {
 		
-		Date introducedDate = null, discontinuedDate = null;
-		int companyId = 0;
-		companyId = new String("").equals(company_id)  ? Integer.parseInt(company_id) : 0;
-		introducedDate = parseInputDate(introduced).get();
-		discontinuedDate = parseInputDate(discontinued).get();
+		Date parsedDateIntroduced = parseInputDate(introduced).get();
+		Date parsedDateDiscontinued = parseInputDate(discontinued).get();
+		
+		String newName = new String("").equals(computerName)  ? computerName : "default name";
+		Date introducedDate = parsedDateIntroduced != null ? parsedDateDiscontinued : null;
+		Date discontinuedDate = parsedDateDiscontinued != null ? parsedDateDiscontinued : null;
+		int companyId = new String("").equals(company_id)  ? Integer.parseInt(company_id) : 0;
 		
 		Computer computer = new Computer.ComputerBuilder()
-				.withName(computerName)
+				.withName(newName)
 				.withIntroduced(introducedDate)
 				.withDiscontinued(discontinuedDate)
 				.withManufacturerID(companyId)
