@@ -61,7 +61,8 @@ public class ControllerDashboard extends HttpServlet {
 		request.setAttribute("displayedComputer", displayedComputer);
 		request.setAttribute("currentPage", page);
 		request.setAttribute("numberOfPage", paging.getNumberOfPage());
-		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/web-ressources/views/dashboard.jsp");
+		RequestDispatcher requestDispatcher = getServletContext()
+				.getRequestDispatcher("/web-ressources/views/dashboard.jsp");
 		requestDispatcher.forward(request, response);
 	}
 

@@ -80,8 +80,8 @@
 					<c:forEach var="computer" items="${displayedComputer}">
 						<tr>
 							<td class="editMode"><input type="checkbox" name="cb"
-								class="cb" value="0"></td>
-							<td><a href="editComputer.jsp" onclick=""> <c:out
+								class="cb" value="${computer.getId()}"></td>
+							<td><a href="editComputer?computerIDToEdit=${computer.getId()}" onclick=""> <c:out
 										value="${computer.getName()}" /></a></td>
 							<td><c:out value="${computer.getIntroduced()}" /></td>
 							<td><c:out value="${computer.getDiscontinued()}" /></td>
@@ -101,11 +101,11 @@
 						aria-hidden="true">&laquo;</span>
 				</a></li>
 				<c:if test="${currentPage > 1}">
-					<li><a href="?page=${currentPage-1}">${currentPage-1}</a></li>
+					<li><a href="dashboard?page=${currentPage-1}">${currentPage-1}</a></li>
 				</c:if>
-				<li><a href="?page=${currentPage}">${currentPage}</a></li>
+				<li><a href="dashboard?page=${currentPage}">${currentPage}</a></li>
 				<c:if test="${currentPage < numberOfPage}">
-					<li><a href="?page=${currentPage+1}">${currentPage+1}</a></li>
+					<li><a href="dashboard?page=${currentPage+1}">${currentPage+1}</a></li>
 				</c:if>
 				<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 				</a></li>

@@ -25,7 +25,9 @@ public class JDBCComputer {
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			computer = MapperComputer.resultSetToComputer(resultSet);
+			if(resultSet.next()) {
+				computer = MapperComputer.resultSetToComputer(resultSet);
+			}
 		} catch (SQLException e) {
 			logger.error("Error while trying to get computer with specified ID !", e);
 		}

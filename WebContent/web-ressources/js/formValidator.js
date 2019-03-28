@@ -1,6 +1,6 @@
 $.validate({
 	lang : 'fr',
-	form : '#addNewComputer',
+	form : '#addNewComputer, #editComputerForm',
 	modules : 'toggleDisabled',
 	onSuccess : function($form) {
 		var introduced = $("#introduced").val();
@@ -8,6 +8,7 @@ $.validate({
 		if (introduced < discontinued) {
 			return false;
 		}
+		alert("test");
 		return true;
 	}
 });

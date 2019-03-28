@@ -33,7 +33,12 @@
 							<div class="form-group">
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
-									name="computerName" placeholder="Computer name">
+									name="computerName" placeholder="Computer name"
+									data-validation="alphanumeric"
+									data-validation-ignore=" ,-,+,.,&,/,:"
+									data-validation-error-msg="Nom d'entreprise invalide 
+									seul les caractères alphanumérique ainsi 
+									que les caractères suivants sont autorisé: espace, -, +, ., &, /, :">
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
@@ -62,7 +67,7 @@
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="Add" class="btn btn-primary">
-							or <a href="addComputer" class="btn btn-default">Cancel</a>
+							or <a href="dashboard" class="btn btn-default">Cancel</a>
 						</div>
 					</form>
 				</div>
@@ -73,7 +78,7 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script
-		src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/jquery.form-validator.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/web-ressources/js/formValidator.js"></script>
 </body>
