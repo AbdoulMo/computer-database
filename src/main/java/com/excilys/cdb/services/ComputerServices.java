@@ -53,10 +53,10 @@ public class ComputerServices {
 		Date parsedDateIntroduced = parseInputDate(introduced).get();
 		Date parsedDateDiscontinued = parseInputDate(discontinued).get();
 
-		String newName = "".equals(name) ? name : "default name";
+		String newName = "".equals(name) ? "default name" : name;
 		Date introducedDate = parsedDateIntroduced != null ? parsedDateDiscontinued : null;
 		Date discontinuedDate = parsedDateDiscontinued != null ? parsedDateDiscontinued : null;
-		int companyId = "".equals(company_id) ? Integer.parseInt(company_id) : 0;
+		int companyId = "0".equals(company_id) ? 0 : Integer.parseInt(company_id);
 
 		Computer computer = new Computer.ComputerBuilder().withName(newName).withIntroduced(introducedDate)
 				.withDiscontinued(discontinuedDate).withManufacturerID(companyId).build();
@@ -76,18 +76,19 @@ public class ComputerServices {
 		return MapperComputer.objectToDTO(computer, company);
 	}
 
-	public boolean editComputer(int id, String name, String introduced, String discontinued, String company_id) {
+	public boolean editComputer(String id, String name, String introduced, String discontinued, String company_id) {
 		
 		Date parsedDateIntroduced = parseInputDate(introduced).get();
 		Date parsedDateDiscontinued = parseInputDate(discontinued).get();
 		
-		String newName = "".equals(name) ? name : "default name";
+		int computerId = Integer.parseInt(id);
+		String newName = "".equals(name) ? "default name" : name;
 		Date introducedDate = parsedDateIntroduced != null ? parsedDateDiscontinued : null;
 		Date discontinuedDate = parsedDateDiscontinued != null ? parsedDateDiscontinued : null;
-		int companyId = "".equals(company_id) ? Integer.parseInt(company_id) : 0;
+		int companyId = "0".equals(company_id) ? 0 : Integer.parseInt(company_id);
 		
 		Computer computer = new Computer.ComputerBuilder()
-				.withID(id)
+				.withID(computerId)
 				.withName(newName)
 				.withIntroduced(introducedDate)
 				.withDiscontinued(discontinuedDate)

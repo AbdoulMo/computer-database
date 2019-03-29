@@ -5,10 +5,9 @@ $.validate({
 	onSuccess : function($form) {
 		var introduced = $("#introduced").val();
 		var discontinued = $("#discontinued").val();
-		if (introduced < discontinued) {
+		if (introduced > discontinued) {
 			return false;
 		}
-		alert("test");
 		return true;
 	}
 });

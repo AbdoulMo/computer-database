@@ -31,12 +31,13 @@
 					<h1>Edit Computer</h1>
 					<c:if test="${computerToEdit != null}">
 						<form id="editComputerForm" action="editComputer" method="POST">
-							<input type="hidden" value="${computerToEdit.getId()}" id="id" />
+							<input type="hidden" name="computerID"
+								value="${computerToEdit.getId()}" id="id" />
 							<fieldset>
 								<div class="form-group">
 									<label for="computerName">Computer name</label> <input
 										type="text" class="form-control" id="computerName"
-										placeholder="Computer name"
+										name="computerName" placeholder="Computer name"
 										value="${computerToEdit.getName()}"
 										data-validation="alphanumeric"
 										data-validation-ignore=" ,-,+,.,&,/,:"
@@ -47,21 +48,22 @@
 								<div class="form-group">
 									<label for="introduced">Introduced date</label> <input
 										type="date" class="form-control" id="introduced"
-										placeholder="Introduced date"
+										name="introduced" placeholder="Introduced date"
 										value="${computerToEdit.getIntroduced()}"
 										data-validation="date">
 								</div>
 								<div class="form-group">
 									<label for="discontinued">Discontinued date</label> <input
 										type="date" class="form-control" id="discontinued"
-										placeholder="Discontinued date"
+										name="discontinued" placeholder="Discontinued date"
 										value="${computerToEdit.getDiscontinued()}"
 										data-validation="date">
 								</div>
 								<div class="form-group">
 									<label for="companyId">Company
 										${computerToEdit.getManufacturer_name()}</label> <select
-										class="form-control" id="companyId" data-validation="number"
+										class="form-control" id="companyId" name="companyId"
+										data-validation="number"
 										data-validation-error-msg="Choix d'entreprise invalide">
 										<option value="invalid">Veuillez choisir une
 											entreprise</option>

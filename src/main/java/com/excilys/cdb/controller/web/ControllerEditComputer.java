@@ -66,9 +66,13 @@ public class ControllerEditComputer extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String computerId, computerName, computerIntro, computerDiscon, companyId;
-		
-		String dt =  request.getParameter("computerToEdit.name");
-		System.out.println(dt);
+		computerId = request.getParameter("computerID");
+		computerName =  request.getParameter("computerName");
+		computerIntro = request.getParameter("introduced");
+		computerDiscon = request.getParameter("discontinued");
+		companyId = request.getParameter("companyId");
+		computerServices.editComputer(computerId, computerName, computerIntro, computerDiscon, companyId);
+		response.sendRedirect("dashboard");
 	}
 
 }

@@ -26,6 +26,7 @@ public class MapperComputer {
 				.withName(computer.getName())
 				.withIntroduced(introduceDate == null ? "" : introduceDate.toString())
 				.withDiscontinued(discontinuedDate == null ? "" : discontinuedDate.toString())
+				.withManufacturer_ID(company == null ? 0: company.getId())
 				.withManufacturerName(company == null ? "": company.getName())
 				.build();
 	}
