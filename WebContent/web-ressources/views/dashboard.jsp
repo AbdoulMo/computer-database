@@ -48,10 +48,12 @@
 			</div>
 		</div>
 
-		<form id="deleteForm" action="#" method="POST">
-			<input type="hidden" name="selection" value="">
+		<c:forEach var="computer" items="${displayedComputer}">
+		<form id="deleteForm" action="deleteComputer" method="POST">
+			<input type="hidden" name="selection" value="${computer.getId()}">
 		</form>
-
+		</c:forEach>
+		
 		<div class="container" style="margin-top: 10px;">
 			<table class="table table-striped table-bordered">
 				<thead>

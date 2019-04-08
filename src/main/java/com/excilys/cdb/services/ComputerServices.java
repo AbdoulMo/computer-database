@@ -97,4 +97,14 @@ public class ComputerServices {
 		
 		return daoComputer.updateComputer(computer);
 	}
+	
+	public boolean deleteComputer(String[] paramComputerID) {
+		boolean result = false;
+		for(String id : paramComputerID) {
+			if(daoComputer.deleteComputer(Integer.parseInt(id))) {
+				result = true;
+			}
+		}
+		return result;
+	}
 }

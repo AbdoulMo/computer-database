@@ -11,7 +11,7 @@ import com.excilys.cdb.model.MapperComputer;
 
 public class JDBCComputer {
 
-	private final static Logger logger = Logger.getLogger(JDBCCompany.class);
+	private final static Logger logger = Logger.getLogger(JDBCComputer.class);
 	private static final String QUERY_GET_COMPUTER_BY_ID = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE id = ?";
 	private static final String QUERY_GET_ALL_COMPUTERS = "SELECT id, name, introduced, discontinued, company_id FROM computer";
 	private static final String QUERY_ADD_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES (?,?,?,?)";
