@@ -2,6 +2,7 @@ package com.excilys.cdb.controller.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,25 +42,46 @@ public class ControllerDashboard extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<DTOComputer> dtoComputerList = new ArrayList<>();
+		ArrayList<DTOComputer> listToDisplay = new ArrayList<>();
+		ArrayList<DTOComputer> allComputerList = new ArrayList<>();
 		try {
-			dtoComputerList = computerServices.getAllComputer();
+			allComputerList = computerServices.getAllComputer();
 		} catch (DataNotFoundException e) {
 			e.printStackTrace();
 		}
 		String searchPattern = request.getParameter("search");
 		if (searchPattern != null) {
-			List<DTOComputer> filtList = dtoComputerList.stream()
+			List<DTOComputer> filteredComputerList = allComputerList.stream()
 					.filter(computerDto -> computerDto.getName().matches("(?i).*" + searchPattern + ".*")
 							| computerDto.getManufacturer_name().matches("(?i).*" + searchPattern + ".*"))
 					.collect(Collectors.toList());
-			paging = new Paging((ArrayList<DTOComputer>) filtList);
-			request.setAttribute("computersFound", filtList.size());
-		}else {
-			paging = new Paging(dtoComputerList);
-			request.setAttribute("computersFound", dtoComputerList.size());
+			listToDisplay = (ArrayList<DTOComputer>) filteredComputerList;
+		} else {
+			listToDisplay = allComputerList;
 		}
-		
+
+		String orderBy = request.getParameter("orderBy");
+
+		if (orderBy != null) {
+			switch (orderBy) {
+			case "name":
+				listToDisplay.sort(Comparator.comparing(DTOComputer::getName));
+				break;
+			case "introduced":
+				listToDisplay.sort(Comparator.comparing(DTOComputer::getIntroduced));
+				break;
+			case "discontinued":
+				listToDisplay.sort(Comparator.comparing(DTOComputer::getDiscontinued));
+				break;
+			case "company":
+				listToDisplay.sort(Comparator.comparing(DTOComputer::getManufacturer_name));
+				break;
+			}
+		}
+
+		paging = new Paging(listToDisplay);
+		request.setAttribute("computersFound", listToDisplay.size());
+
 		int page = 1;
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));

@@ -68,12 +68,16 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th>Computer name</th>
-						<th>Introduced date</th>
+						<th>Computer name <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=name"><span
+								class="glyphicon glyphicon-chevron-up"></span> </a> </th>
+						<th>Introduced date <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=introduced"><span
+								class="glyphicon glyphicon-chevron-up"></span> </a></th>
 						<!-- Table header for Discontinued Date -->
-						<th>Discontinued date</th>
+						<th>Discontinued date <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=discontinued"><span
+								class="glyphicon glyphicon-chevron-up"></span> </a></th>
 						<!-- Table header for Company -->
-						<th>Company</th>
+						<th>Company <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=company"><span
+								class="glyphicon glyphicon-chevron-up"></span> </a></th>
 
 					</tr>
 				</thead>
@@ -102,13 +106,13 @@
 			<ul class="pagination">
 				<c:if test="${currentPage > 1}">
 					<li><a
-						href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage-1}">${currentPage-1}</a></li>
+						href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%><%=request.getParameter("orderBy") == null ? "" : "orderBy="+request.getParameter("orderBy")+"&"%>page=${currentPage-1}">${currentPage-1}</a></li>
 				</c:if>
 				<li><a
-					href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage}">${currentPage}</a></li>
+					href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%><%=request.getParameter("orderBy") == null ? "" : "orderBy="+request.getParameter("orderBy")+"&"%>page=${currentPage}">${currentPage}</a></li>
 				<c:if test="${currentPage < numberOfPage}">
 					<li><a
-						href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage+1}">${currentPage+1}</a></li>
+						href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%><%=request.getParameter("orderBy") == null ? "" : "orderBy="+request.getParameter("orderBy")+"&"%>page=${currentPage+1}">${currentPage+1}</a></li>
 				</c:if>
 			</ul>
 
