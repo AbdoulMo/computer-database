@@ -100,18 +100,16 @@
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
 			<ul class="pagination">
-				<li><a href="#" aria-label="Previous"> <span
-						aria-hidden="true">&laquo;</span>
-				</a></li>
 				<c:if test="${currentPage > 1}">
-				<li><a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage-1}">${currentPage-1}</a></li>
+					<li><a
+						href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage-1}">${currentPage-1}</a></li>
 				</c:if>
-				<li><a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage}">${currentPage}</a></li>
+				<li><a
+					href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage}">${currentPage}</a></li>
 				<c:if test="${currentPage < numberOfPage}">
-					<li><a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage+1}">${currentPage+1}</a></li>
+					<li><a
+						href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage+1}">${currentPage+1}</a></li>
 				</c:if>
-				<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				</a></li>
 			</ul>
 
 		</div>

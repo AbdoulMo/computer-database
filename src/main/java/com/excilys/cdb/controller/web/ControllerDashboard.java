@@ -41,10 +41,6 @@ public class ControllerDashboard extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(request.getContextPath());
-		System.out.println(request.getQueryString());
-		System.out.println(request.getRequestURL());
-		System.out.println(request.getServletPath());
 		ArrayList<DTOComputer> dtoComputerList = new ArrayList<>();
 		try {
 			dtoComputerList = computerServices.getAllComputer();
