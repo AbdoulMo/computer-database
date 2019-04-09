@@ -3,6 +3,7 @@ package com.excilys.cdb.controller.web;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,14 +41,29 @@ public class ControllerDashboard extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println(request.getContextPath());
+		System.out.println(request.getQueryString());
+		System.out.println(request.getRequestURL());
+		System.out.println(request.getServletPath());
 		ArrayList<DTOComputer> dtoComputerList = new ArrayList<>();
 		try {
 			dtoComputerList = computerServices.getAllComputer();
 		} catch (DataNotFoundException e) {
 			e.printStackTrace();
 		}
-		paging = new Paging(dtoComputerList);
-
+		String searchPattern = request.getParameter("search");
+		if (searchPattern != null) {
+			List<DTOComputer> filtList = dtoComputerList.stream()
+					.filter(computerDto -> computerDto.getName().matches("(?i).*" + searchPattern + ".*")
+							| computerDto.getManufacturer_name().matches("(?i).*" + searchPattern + ".*"))
+					.collect(Collectors.toList());
+			paging = new Paging((ArrayList<DTOComputer>) filtList);
+			request.setAttribute("computersFound", filtList.size());
+		}else {
+			paging = new Paging(dtoComputerList);
+			request.setAttribute("computersFound", dtoComputerList.size());
+		}
+		
 		int page = 1;
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -57,7 +73,6 @@ public class ControllerDashboard extends HttpServlet {
 		}
 		List<DTOComputer> displayedComputer = paging.showComputerList(page);
 
-		request.setAttribute("computersFound", dtoComputerList.size());
 		request.setAttribute("displayedComputer", displayedComputer);
 		request.setAttribute("currentPage", page);
 		request.setAttribute("numberOfPage", paging.getNumberOfPage());

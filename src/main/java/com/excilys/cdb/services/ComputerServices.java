@@ -33,7 +33,11 @@ public class ComputerServices {
 			dtoComputersList.add(MapperComputer.objectToDTO(computer, company));
 		}
 		return dtoComputersList;
-
+	}
+	
+	public ArrayList<DTOComputer> searchComputer(ArrayList<DTOComputer> dtoComputersList, String pattern){
+		
+		return null;
 	}
 
 	private Optional<Date> parseInputDate(String date) {

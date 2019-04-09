@@ -17,6 +17,7 @@ public class JDBCComputer {
 	private static final String QUERY_ADD_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES (?,?,?,?)";
 	private static final String QUERY_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
 	private static final String QUERY_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
+	private static final String QUERY_SEARCH_COMPUTER = "SELECT * FROM computer WHERE name LIKE %?%";
 	private ResultSet resultSet;
 
 	public Optional<Computer> getComputerByID(int id) {
@@ -25,7 +26,7 @@ public class JDBCComputer {
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
-			if(resultSet.next()) {
+			if (resultSet.next()) {
 				computer = MapperComputer.resultSetToComputer(resultSet);
 			}
 		} catch (SQLException e) {
@@ -94,5 +95,21 @@ public class JDBCComputer {
 			logger.error("Error while trying to update a computer !", e);
 		}
 		return result == 1 ? true : false;
+	}
+	
+	public ArrayList<Computer> searchComputer(String pattern) {
+		ArrayList<Computer> lComputer = new ArrayList<>();
+		try (Connection conn = HikariCP.getInstance().getConnection();
+				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_COMPUTER);) {
+			preparedStatement.setString(1, pattern);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Computer computer = MapperComputer.resultSetToComputer(resultSet);
+				lComputer.add(computer);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lComputer;
 	}
 }

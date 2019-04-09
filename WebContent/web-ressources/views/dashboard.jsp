@@ -49,11 +49,11 @@
 		</div>
 
 		<c:forEach var="computer" items="${displayedComputer}">
-		<form id="deleteForm" action="deleteComputer" method="POST">
-			<input type="hidden" name="selection" value="${computer.getId()}">
-		</form>
+			<form id="deleteForm" action="deleteComputer" method="POST">
+				<input type="hidden" name="selection" value="${computer.getId()}">
+			</form>
 		</c:forEach>
-		
+
 		<div class="container" style="margin-top: 10px;">
 			<table class="table table-striped table-bordered">
 				<thead>
@@ -83,8 +83,9 @@
 						<tr>
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="${computer.getId()}"></td>
-							<td><a href="editComputer?computerIDToEdit=${computer.getId()}" onclick=""> <c:out
-										value="${computer.getName()}" /></a></td>
+							<td><a
+								href="editComputer?computerIDToEdit=${computer.getId()}"
+								onclick=""> <c:out value="${computer.getName()}" /></a></td>
 							<td><c:out value="${computer.getIntroduced()}" /></td>
 							<td><c:out value="${computer.getDiscontinued()}" /></td>
 							<td><c:out value="${computer.getManufacturer_name()}" /></td>
@@ -103,16 +104,16 @@
 						aria-hidden="true">&laquo;</span>
 				</a></li>
 				<c:if test="${currentPage > 1}">
-					<li><a href="dashboard?page=${currentPage-1}">${currentPage-1}</a></li>
+				<li><a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage-1}">${currentPage-1}</a></li>
 				</c:if>
-				<li><a href="dashboard?page=${currentPage}">${currentPage}</a></li>
+				<li><a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage}">${currentPage}</a></li>
 				<c:if test="${currentPage < numberOfPage}">
-					<li><a href="dashboard?page=${currentPage+1}">${currentPage+1}</a></li>
+					<li><a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>page=${currentPage+1}">${currentPage+1}</a></li>
 				</c:if>
 				<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 				</a></li>
 			</ul>
-			
+
 		</div>
 	</footer>
 	<script
