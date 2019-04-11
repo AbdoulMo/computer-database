@@ -14,6 +14,10 @@
 		<common-lang>3.4</common-lang>
 		<jstl>1.2</jstl>
 		<HickariCP>2.7.8</HickariCP>
+		<Spring-core>5.1.5.RELEASE</Spring-core>
+		<Spring-context>5.1.5.RELEASE</Spring-context>
+		<Spring-beans>5.1.5.RELEASE</Spring-beans>
+		<Spring-web>5.1.5.RELEASE</Spring-web>
 	</properties>
 	<dependencies>
 
@@ -59,8 +63,32 @@
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>${HickariCP}</version>
-			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${Spring-core}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${Spring-context}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${Spring-beans}</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-web</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>${Spring-web}</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
