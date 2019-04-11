@@ -68,32 +68,4 @@ public class Paging {
 		}
 		return computerList.subList(startIndex, endIndex);
 	}
-
-//	public void handlePagingIndex(int requiredPage, int listSize) {
-//		if (this.pageIndex > requiredPage) {
-//			if (startIndex > maxDisplay) {
-//				startIndex -= maxDisplay;
-//				endIndex -= maxDisplay;
-//				pageIndex--;
-//			} else {
-//				while (startIndex > 0) {
-//					startIndex -= 1;
-//					endIndex -= 1;
-//					pageIndex--;
-//				}
-//			}
-//		} else if (this.pageIndex < requiredPage) {
-//			if (endIndex + maxDisplay < listSize) {
-//				startIndex += maxDisplay;
-//				endIndex += maxDisplay;
-//				pageIndex++;
-//			} else {
-//				while (endIndex <= listSize - 1) {
-//					startIndex += 1;
-//					endIndex += 1;
-//				}
-//				pageIndex++;
-//			}
-//		}
-//	}
 }

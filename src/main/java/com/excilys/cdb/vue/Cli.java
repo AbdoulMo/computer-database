@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.excilys.cdb.model.Company;
-import com.excilys.cdb.model.Computer;
+import com.excilys.cdb.model.DTOComputer;
 
 public class Cli {
 
@@ -19,18 +19,16 @@ public class Cli {
 		System.out.println("Entrez un chiffre pour choisir l'action :\n" + "1: Lister les ordinateurs.\n"
 				+ "2: Lister les entreprises.\n" + "3: Afficher les détails d'un ordinateur.\n"
 				+ "4: Créer un ordinateur.\n" + "5: Mettre à jour les informations d'un ordinateur.\n"
-				+ "6: Supprimer un ordinateur.\n" + "7: Quitter.");
+				+ "6: Supprimer un ordinateur.\n" + "7: Supprimer une entreprise.\n" + "8: Quitter.");
 	}
 
-	public void displayList(List<Computer> list) {
-		for (Object o : list) {
-			System.out.println(o);
-		}
+	public void messagePage(int maximumPage) {
+		System.out.println("Entrez le numéro de la page à afficher compris entre 1 et " + maximumPage + " !");
 	}
 
-	public void displayComputerList(List<Computer> computerList) {
-		for (Computer pc : computerList) {
-			System.out.println(pc);
+	public void displayComputerList(List<DTOComputer> computerList) {
+		for (DTOComputer computerDTO : computerList) {
+			System.out.println(computerDTO);
 		}
 		System.out.println("\n");
 	}
@@ -47,7 +45,12 @@ public class Cli {
 		return Integer.parseInt(getInput());
 	}
 
-	public void displayComputer(Computer c) {
+	public String[] askComputerIDToDelete() {
+		System.out.println("Entrez le(s) identifiant(s) ordinateur à supprimer (séparer par une virgule)");
+		return getInput().split(",");
+	}
+
+	public void displayComputer(DTOComputer c) {
 		System.out.println(c);
 	}
 
@@ -78,40 +81,27 @@ public class Cli {
 
 	public ArrayList<String> getUpdateComputerParams() {
 		ArrayList<String> updateParams = new ArrayList<>();
-		System.out.println("Choisisez le paramètre a modifier " + "(1: Nom de l'ordinateur\n"
-				+ " 2: Date d'introduction\n" + " 3: Date d'arrete de production\n"
-				+ " 4: L'identifiant du fabriquant\n" + " 5: Pour terminer");
-		int choixModif = Integer.parseInt(getInput());
-		updateParams.add(Integer.toString(choixModif));
 
-		switch (choixModif) {
-		case 1:
-			System.out.println("Entrez le nouveau nom: ");
-			String newName = getInput();
-			updateParams.add(newName);
-			break;
-		case 2:
+		System.out.println("Entrez le nouveau nom: ");
+		String newName = getInput();
+		updateParams.add(newName);
+
+		String newDateI;
+		do {
 			System.out.println("Entrez la nouvelle date (yyyy-mm-dd): ");
-			String newDateI = getInput();
-			updateParams.add(newDateI);
-			break;
-		case 3:
-			System.out.println("Entrez la nouvelle date (yyyy-mm-dd): ");
-			String newDateD = getInput();
-			updateParams.add(newDateD);
-			break;
-		case 4:
-			System.out.println("Entrez le nouvel identifiant: ");
-			String newID = getInput();
-			updateParams.add(newID);
-			break;
-		case 5:
-			System.out.println("Fin de la mise à jour");
-			break;
-		default:
-			System.out.println("Choix invalide veuillez réessayer !");
-			break;
-		}
+			newDateI = getInput();
+		}while(newDateI.matches(""));
+		
+		updateParams.add(newDateI);
+
+		System.out.println("Entrez la nouvelle date (yyyy-mm-dd): ");
+		String newDateD = getInput();
+		updateParams.add(newDateD);
+
+		System.out.println("Entrez le nouvel identifiant de l'entreprise: ");
+		String newID = getInput();
+		updateParams.add(newID);
+
 		return updateParams;
 	}
 
@@ -130,7 +120,7 @@ public class Cli {
 	public void invelidInput() {
 		System.out.println("Choix invalide veuillez réessayer !");
 	}
-	
+
 	public void invalidDateInput() {
 		System.out.println("Format de la date entré incorrecte valeur mise à jour à null !");
 	}

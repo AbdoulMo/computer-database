@@ -29,7 +29,7 @@ public class ControllerDashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private ApplicationContext applicationContext;
-	private static ComputerServices computerServices;
+	private ComputerServices computerServices;
 	private static Paging paging;
 
 	/**
