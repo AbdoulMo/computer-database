@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.excilys.cdb.exceptions.DataNotFoundException;
 import com.excilys.cdb.model.Company;
 import com.excilys.cdb.services.CompanyServices;
@@ -21,6 +24,8 @@ import com.excilys.cdb.services.ComputerServices;
 @WebServlet("/addComputer")
 public class ControllerAddComputer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private ApplicationContext applicationContext;
 	private static CompanyServices companyServices;
 	private static ComputerServices computerServices;
 
@@ -29,8 +34,9 @@ public class ControllerAddComputer extends HttpServlet {
 	 */
 	public ControllerAddComputer() {
 		super();
-		companyServices = new CompanyServices();
-		computerServices = new ComputerServices();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 	}
 
 	/**

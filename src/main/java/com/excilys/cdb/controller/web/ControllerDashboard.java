@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.excilys.cdb.exceptions.DataNotFoundException;
 import com.excilys.cdb.model.DTOComputer;
 import com.excilys.cdb.services.ComputerServices;
@@ -25,6 +28,7 @@ import com.excilys.cdb.vue.Paging;
 public class ControllerDashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private ApplicationContext applicationContext;
 	private static ComputerServices computerServices;
 	private static Paging paging;
 
@@ -33,7 +37,8 @@ public class ControllerDashboard extends HttpServlet {
 	 */
 	public ControllerDashboard() {
 		super();
-		computerServices = new ComputerServices();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 	}
 
 	/**

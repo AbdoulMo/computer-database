@@ -7,7 +7,7 @@
 	<bean id="hikariConnection" class="com.excilys.cdb.dao.HikariCP" scope="singleton" autowire="byName" lazy-init="true"></bean>
 	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany" scope="prototype" autowire="byName" lazy-init="true"></bean>
 	<bean id="daoCOmputer" class="com.excilys.cdb.dao.JDBCComputer" scope="prototype" autowire="byName" lazy-init="true"></bean>
-	<bean id="companyServices" class="com.excilys.cdb.services.CompanyServices" scope="prototype" autowire="byName" lazy-init="true"></bean>
-	<bean id="computerServices" class="com.excilys.cdb.services.ComputerServices" scope="prototype" autowire="byName" lazy-init="true"></bean>
+	<bean id="companyService" class="com.excilys.cdb.services.CompanyServices" scope="prototype" autowire="byName" lazy-init="true"></bean>
+	<bean id="computerService" class="com.excilys.cdb.services.ComputerServices" scope="prototype" autowire="byName" lazy-init="true"></bean>
 	
 </beans>

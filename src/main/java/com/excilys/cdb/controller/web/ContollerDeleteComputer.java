@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.excilys.cdb.services.ComputerServices;
 
 /**
@@ -17,6 +20,7 @@ import com.excilys.cdb.services.ComputerServices;
 public class ContollerDeleteComputer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private ApplicationContext applicationContext;
 	private static ComputerServices computerServices;
 
 	/**
@@ -24,7 +28,8 @@ public class ContollerDeleteComputer extends HttpServlet {
 	 */
 	public ContollerDeleteComputer() {
 		super();
-		computerServices = new ComputerServices();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 	}
 
 
