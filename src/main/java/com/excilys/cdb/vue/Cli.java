@@ -10,6 +10,7 @@ import com.excilys.cdb.model.DTOComputer;
 public class Cli {
 
 	private Scanner input = new Scanner(System.in);
+	private String dateFormat = "\\d{4}-\\d{2}-\\d{2}";
 
 	public String getInput() {
 		return input.nextLine();
@@ -23,7 +24,7 @@ public class Cli {
 	}
 
 	public void messagePage(int maximumPage) {
-		System.out.println("Entrez le numéro de la page à afficher compris entre 1 et " + maximumPage + " !");
+		System.out.println(new StringBuilder("Entrez le numéro de la page à afficher compris entre 1 et " + maximumPage + " , (q) pour quitter"));
 	}
 
 	public void displayComputerList(List<DTOComputer> computerList) {
@@ -60,12 +61,18 @@ public class Cli {
 		String newComputerName = getInput();
 		computerParams.add(newComputerName);
 
-		System.out.println("La date d'introduction au format (yyyy-mm-dd)");
-		String newComputerDateI = getInput();
+		String newComputerDateI;
+		do {
+			System.out.println("La date d'introduction au format (yyyy-mm-dd)");
+			newComputerDateI = getInput();
+		} while (!newComputerDateI.matches(dateFormat));
 		computerParams.add(newComputerDateI);
 
-		System.out.println("La date d'arret de production au format (yyyy-mm-dd)");
-		String newComputerDateD = getInput();
+		String newComputerDateD;
+		do {
+			System.out.println("La date d'arret de production au format (yyyy-mm-dd)");
+			newComputerDateD = getInput();
+		} while (!newComputerDateI.matches(dateFormat));
 		computerParams.add(newComputerDateD);
 
 		System.out.println("L'identifiant de l'entreprise");
@@ -88,14 +95,17 @@ public class Cli {
 
 		String newDateI;
 		do {
-			System.out.println("Entrez la nouvelle date (yyyy-mm-dd): ");
+			System.out.println("Entrez la nouvelle date d'introduction (yyyy-mm-dd): ");
 			newDateI = getInput();
-		}while(newDateI.matches(""));
-		
+		} while (!newDateI.matches(dateFormat));
+
 		updateParams.add(newDateI);
 
-		System.out.println("Entrez la nouvelle date (yyyy-mm-dd): ");
-		String newDateD = getInput();
+		String newDateD;
+		do {
+			System.out.println("Entrez la nouvelle date d'arret de production (yyyy-mm-dd): ");
+			newDateD = getInput();
+		} while (!newDateD.matches(dateFormat));
 		updateParams.add(newDateD);
 
 		System.out.println("Entrez le nouvel identifiant de l'entreprise: ");

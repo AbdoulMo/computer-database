@@ -3,6 +3,8 @@ package com.excilys.cdb.controller;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.excilys.cdb.exceptions.DataNotFoundException;
 import com.excilys.cdb.model.Company;
@@ -16,6 +18,7 @@ public class ControllerCLI {
 
 	private final static Logger logger = Logger.getLogger(ControllerCLI.class);
 
+	ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	private ComputerServices computerServices;
 	private CompanyServices companyServices;
 
@@ -25,8 +28,8 @@ public class ControllerCLI {
 
 	public ControllerCLI() {
 		cli = new Cli();
-		computerServices = new ComputerServices();
-		companyServices = new CompanyServices();
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
+		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
 	}
 
 	public boolean isLeaveApp() {
