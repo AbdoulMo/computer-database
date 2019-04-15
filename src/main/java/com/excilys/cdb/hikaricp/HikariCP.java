@@ -16,7 +16,7 @@ public class HikariCP {
 		ds = new HikariDataSource(config);
 	}
 
-	public static HikariCP getInstance() {
+	public HikariCP getInstance() {
 		return _instance;
 	}
 

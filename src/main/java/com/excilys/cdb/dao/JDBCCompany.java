@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.*;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.excilys.cdb.hikaricp.HikariCP;
 import com.excilys.cdb.model.Company;
@@ -16,11 +18,18 @@ public class JDBCCompany {
 	private static final String QUERY_GET_ALL_COMPANY = "SELECT id, name FROM company";
 	private static final String QUERY_DELETE_COMPANY = "DELETE FROM company WHERE id = ?";
 	private static final String QUERY_DELETE_COMPUTER_WITH_COMPANY_ID = "DELETE FROM computer WHERE company_id = ?";
+	private ApplicationContext applicationContext;
+	private HikariCP hikariCP; 
 	private ResultSet resultSet;
+	
+	public JDBCCompany() {
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		hikariCP = (HikariCP) applicationContext.getBean(HikariCP.class);
+	}
 
 	public Optional<Company> getCompanyByID(int id) {
 		Company company = null;
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPANY_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -33,7 +42,7 @@ public class JDBCCompany {
 
 	public ArrayList<Company> getAllCompany() {
 		ArrayList<Company> lCompany = new ArrayList<>();
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPANY);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -49,7 +58,7 @@ public class JDBCCompany {
 	public boolean deleteCompany(int id) {
 		int resultQuery1 = 0;
 		int resultQuery2 = 0;
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement1 = conn.prepareStatement(QUERY_DELETE_COMPUTER_WITH_COMPANY_ID);
 				PreparedStatement preparedStatement2 = conn.prepareStatement(QUERY_DELETE_COMPANY);) {
 			conn.setAutoCommit(false);

@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.*;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.excilys.cdb.hikaricp.HikariCP;
 import com.excilys.cdb.model.Computer;
@@ -18,11 +20,18 @@ public class JDBCComputer {
 	private static final String QUERY_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
 	private static final String QUERY_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
 	private static final String QUERY_SEARCH_COMPUTER = "SELECT * FROM computer WHERE name LIKE %?%";
+	private ApplicationContext applicationContext;
+	private HikariCP hikariCP; 
 	private ResultSet resultSet;
+	
+	public JDBCComputer() {
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		hikariCP = (HikariCP) applicationContext.getBean(HikariCP.class);
+	}
 
 	public Optional<Computer> getComputerByID(int id) {
 		Computer computer = null;
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPUTER_BY_ID);) {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -37,7 +46,7 @@ public class JDBCComputer {
 
 	public ArrayList<Computer> getAllComputers() {
 		ArrayList<Computer> lComputer = new ArrayList<>();
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPUTERS);) {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -52,7 +61,7 @@ public class JDBCComputer {
 
 	public boolean addComputer(Computer computer) {
 		int result = 0;
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_ADD_COMPUTER);) {
 			preparedStatement.setString(1, computer.getName());
 			preparedStatement.setDate(2, computer.getIntroduced());
@@ -71,7 +80,7 @@ public class JDBCComputer {
 
 	public boolean deleteComputer(int id) {
 		int result = 0;
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_DELETE_COMPUTER);) {
 			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
@@ -83,7 +92,7 @@ public class JDBCComputer {
 
 	public boolean updateComputer(Computer computer) {
 		int result = 0;
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_COMPUTER);) {
 			preparedStatement.setString(1, computer.getName());
 			preparedStatement.setDate(2, computer.getIntroduced());
@@ -99,7 +108,7 @@ public class JDBCComputer {
 	
 	public ArrayList<Computer> searchComputer(String pattern) {
 		ArrayList<Computer> lComputer = new ArrayList<>();
-		try (Connection conn = HikariCP.getInstance().getConnection();
+		try (Connection conn = hikariCP.getConnection();
 				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_COMPUTER);) {
 			preparedStatement.setString(1, pattern);
 			resultSet = preparedStatement.executeQuery();

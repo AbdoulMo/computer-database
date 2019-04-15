@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.excilys.cdb.dao.JDBCCompany;
 import com.excilys.cdb.dao.JDBCComputer;
 import com.excilys.cdb.exceptions.DataNotFoundException;
@@ -16,8 +19,15 @@ import com.excilys.cdb.model.MapperComputer;
 
 public class ComputerServices {
 
-	private static JDBCComputer daoComputer = new JDBCComputer();
-	private static JDBCCompany daoCompany = new JDBCCompany();
+	private ApplicationContext applicationContext;
+	private static JDBCComputer daoComputer;
+	private static JDBCCompany daoCompany;
+	
+	public ComputerServices() {
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		daoCompany = (JDBCCompany) applicationContext.getBean(JDBCCompany.class);
+		daoComputer = (JDBCComputer) applicationContext.getBean(JDBCComputer.class);
+	}
 
 	public ArrayList<DTOComputer> getAllComputer() throws DataNotFoundException {
 		ArrayList<Computer> computerList = daoComputer.getAllComputers();
