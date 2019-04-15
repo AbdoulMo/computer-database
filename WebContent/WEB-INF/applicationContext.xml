@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<bean id="cli" class="com.excilys.cdb.vue.Cli" scope="prototype" lazy-init="true"></bean>
 	<bean id="hikariConnection" class="com.excilys.cdb.dao.HikariCP" scope="singleton" autowire="byName" lazy-init="true"></bean>
 	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany" scope="prototype" autowire="byName" lazy-init="true"></bean>
 	<bean id="daoCOmputer" class="com.excilys.cdb.dao.JDBCComputer" scope="prototype" autowire="byName" lazy-init="true"></bean>

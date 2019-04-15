@@ -29,15 +29,20 @@ public class ControllerEditComputer extends HttpServlet {
 	private ApplicationContext applicationContext;
 	private static ComputerServices computerServices;
 	private static CompanyServices companyServices;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
+		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ControllerEditComputer() {
 		super();
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
-		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
 	}
 
 	/**

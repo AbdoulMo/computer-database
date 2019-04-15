@@ -19,19 +19,23 @@ import com.excilys.cdb.services.ComputerServices;
 @WebServlet("/deleteComputer")
 public class ContollerDeleteComputer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ApplicationContext applicationContext;
 	private static ComputerServices computerServices;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ContollerDeleteComputer() {
 		super();
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -39,9 +43,9 @@ public class ContollerDeleteComputer extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String[] computersID = request.getParameter("selection").split(",");
-		if(computerServices.deleteComputer(computersID)) {
+		if (computerServices.deleteComputer(computersID)) {
 			doGet(request, response);
 		}
 	}

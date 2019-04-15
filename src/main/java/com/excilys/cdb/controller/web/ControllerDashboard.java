@@ -32,13 +32,18 @@ public class ControllerDashboard extends HttpServlet {
 	private ComputerServices computerServices;
 	private static Paging paging;
 
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
+	}
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ControllerDashboard() {
 		super();
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 	}
 
 	/**

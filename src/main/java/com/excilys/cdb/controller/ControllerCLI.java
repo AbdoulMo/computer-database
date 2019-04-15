@@ -19,15 +19,15 @@ public class ControllerCLI {
 	private final static Logger logger = Logger.getLogger(ControllerCLI.class);
 
 	ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+	private Cli cli;
 	private ComputerServices computerServices;
 	private CompanyServices companyServices;
-
-	private Cli cli;
+	
 
 	private boolean leaveApp = false;
 
 	public ControllerCLI() {
-		cli = new Cli();
+		cli = (Cli) applicationContext.getBean(Cli.class);
 		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
 	}

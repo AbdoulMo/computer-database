@@ -24,19 +24,24 @@ import com.excilys.cdb.services.ComputerServices;
 @WebServlet("/addComputer")
 public class ControllerAddComputer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ApplicationContext applicationContext;
 	private static CompanyServices companyServices;
 	private static ComputerServices computerServices;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
+		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ControllerAddComputer() {
 		super();
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);
-		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 	}
 
 	/**
