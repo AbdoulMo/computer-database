@@ -15,6 +15,25 @@ import com.excilys.cdb.vue.Cli;
 import com.excilys.cdb.vue.Paging;
 
 public class ControllerCLI {
+	
+	private enum ChoixMenu{
+		
+		DISPLAY_ALL_COMPUTER(1),
+		DISPLAY_ALL_COMPANY(2),
+		DISPLAY_COMPUTER_WITH_ID(3),
+		CREATE_COMPUTER(4),
+		UPDATE_COMPUTER(5),
+		DELETE_COMPUTER(6),
+		DELETE_COMPANY(7),
+		LEAVE_APP(8);
+		
+		@SuppressWarnings("unused")
+		private int selection = 0;
+		
+		 ChoixMenu(int selection) {
+			this.selection = selection;
+		}
+	}
 
 	private final static Logger logger = Logger.getLogger(ControllerCLI.class);
 
@@ -41,8 +60,8 @@ public class ControllerCLI {
 	}
 
 	public void action(int choice) throws DataNotFoundException {
-		switch (choice) {
-		case 1:
+		switch (ChoixMenu.values()[choice - 1]) {
+		case DISPLAY_ALL_COMPUTER:
 			ArrayList<DTOComputer> computerList = computerServices.getAllComputer();
 			Paging paging = new Paging(computerList);
 			int page = 1;
@@ -65,15 +84,15 @@ public class ControllerCLI {
 				}
 			} while (display);
 			break;
-		case 2:
+		case DISPLAY_ALL_COMPANY:
 			ArrayList<Company> companyList = companyServices.getAllCompany();
 			cli.displayCompanyList(companyList);
 			break;
-		case 3:
+		case DISPLAY_COMPUTER_WITH_ID:
 			DTOComputer dtoComputer = computerServices.getComputerByID(cli.askComputerID());
 			cli.displayComputer(dtoComputer);
 			break;
-		case 4:
+		case CREATE_COMPUTER:
 			ArrayList<String> computerParams = cli.getComputerParams();
 			computerServices.addComputer(computerParams.get(0), 
 										computerParams.get(1), 
@@ -81,7 +100,7 @@ public class ControllerCLI {
 										computerParams.get(3));
 			cli.createdComputer();
 			break;
-		case 5:
+		case UPDATE_COMPUTER:
 			DTOComputer dtoEditComputer = computerServices.getComputerByID(cli.askComputerID());
 			ArrayList<String> updateParams = cli.getUpdateComputerParams();
 			computerServices.editComputer(String.valueOf(dtoEditComputer.getId()),
@@ -90,11 +109,15 @@ public class ControllerCLI {
 											updateParams.get(2), 
 											updateParams.get(3));
 			break;
-		case 6:
+		case DELETE_COMPUTER:
 			computerServices.deleteComputer(cli.askComputerIDToDelete());
 			cli.deletedComputer();
 			break;
-		case 8:
+		case DELETE_COMPANY:
+			companyServices.deleteCompany(cli.askCompanyIDToDelete());
+			cli.deletedCompany();
+			break;
+		case LEAVE_APP:
 			setLeaveApp(true);
 			cli.leftApplication();
 			break;

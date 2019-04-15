@@ -27,4 +27,8 @@ public class CompanyServices {
 		}
 		return daoCompany.getAllCompany();
 	}
+	
+	public boolean deleteCompany(int id) {
+		return daoCompany.deleteCompany(id);
+	}
 }

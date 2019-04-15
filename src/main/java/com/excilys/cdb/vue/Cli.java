@@ -24,7 +24,8 @@ public class Cli {
 	}
 
 	public void messagePage(int maximumPage) {
-		System.out.println(new StringBuilder("Entrez le numéro de la page à afficher compris entre 1 et " + maximumPage + " , (q) pour quitter"));
+		System.out.println(new StringBuilder(
+				"Entrez le numéro de la page à afficher compris entre 1 et " + maximumPage + " , (q) pour quitter"));
 	}
 
 	public void displayComputerList(List<DTOComputer> computerList) {
@@ -49,6 +50,15 @@ public class Cli {
 	public String[] askComputerIDToDelete() {
 		System.out.println("Entrez le(s) identifiant(s) ordinateur à supprimer (séparer par une virgule)");
 		return getInput().split(",");
+	}
+
+	public int askCompanyIDToDelete() {
+		System.out.println("Entrez l'identifiant de l'entreprise à supprimer");
+		int id = 0;
+		do {
+			id = Integer.parseInt(getInput());
+		} while (id == 0);
+		return id;
 	}
 
 	public void displayComputer(DTOComputer c) {
@@ -121,6 +131,10 @@ public class Cli {
 
 	public void deletedComputer() {
 		System.out.println("L'ordinateur à été supprimé.");
+	}
+	
+	public void deletedCompany() {
+		System.out.println("L'entreprise ainsi que ces ordinateurs on été supprimé.");
 	}
 
 	public void leftApplication() {
