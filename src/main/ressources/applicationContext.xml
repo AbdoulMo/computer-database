@@ -21,22 +21,11 @@
 	</bean>
 
 	<!-- mvc -->
-	<!-- <mvc:annotation-driven />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/web-ressources/views/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
-	</bean>
-
-
-	<context:component-scan
-		base-package="com.excilys.cdb.controller.web" />
-	<context:property-placeholder
+	<!-- <mvc:annotation-driven /> <mvc:resources mapping="/resources/**" location="/resources/" 
+		/> <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<property name="prefix"> <value>/web-ressources/views/</value> </property> 
+		<property name="suffix"> <value>.jsp</value> </property> </bean> <context:component-scan 
+		base-package="com.excilys.cdb.controller.web" /> <context:property-placeholder 
 		location="classpath:database.properties" /> -->
 	<!-- mvc -->
 
@@ -51,6 +40,11 @@
 	<bean id="jdbctemplate"
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg index="0" ref="dataSource" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<bean id="cli" class="com.excilys.cdb.vue.Cli" scope="prototype"
