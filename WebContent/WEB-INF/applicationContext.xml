@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<bean id="cli" class="com.excilys.cdb.vue.Cli" scope="prototype" lazy-init="true"></bean>
-	<bean id="hikariConnection" class="com.excilys.cdb.dao.HikariCP" scope="singleton" autowire="byName" lazy-init="true"></bean>
-	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany" scope="prototype" autowire="byName" lazy-init="true"></bean>
-	<bean id="daoCOmputer" class="com.excilys.cdb.dao.JDBCComputer" scope="prototype" autowire="byName" lazy-init="true"></bean>
-	<bean id="companyServices" class="com.excilys.cdb.services.CompanyServices" scope="prototype" autowire="byName" lazy-init="true"></bean>
-	<bean id="computerServices" class="com.excilys.cdb.services.ComputerServices" scope="prototype" autowire="byName" lazy-init="true"></bean>
-	
+	<bean id="myProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:database.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- mvc -->
+	<!-- <mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/web-ressources/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+
+	<context:component-scan
+		base-package="com.excilys.cdb.controller.web" />
+	<context:property-placeholder
+		location="classpath:database.properties" /> -->
+	<!-- mvc -->
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${jdbcUrl}" />
+		<property name="username" value="${dataSource.user}" />
+		<property name="password" value="${dataSource.password}" />
+	</bean>
+
+	<bean id="jdbctemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg index="0" ref="dataSource" />
+	</bean>
+
+	<bean id="cli" class="com.excilys.cdb.vue.Cli" scope="prototype"
+		lazy-init="true"></bean>
+	<bean id="hikariConnection"
+		class="com.excilys.cdb.hikaricp.HikariCP" scope="singleton"
+		lazy-init="true"></bean>
+	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany"
+		scope="prototype" lazy-init="true"></bean>
+	<bean id="daoCOmputer" class="com.excilys.cdb.dao.JDBCComputer"
+		scope="prototype" lazy-init="true"></bean>
+	<bean id="companyService"
+		class="com.excilys.cdb.services.CompanyServices" scope="prototype"
+		lazy-init="true"></bean>
+	<bean id="computerService"
+		class="com.excilys.cdb.services.ComputerServices" scope="prototype"
+		lazy-init="true"></bean>
+
 </beans>

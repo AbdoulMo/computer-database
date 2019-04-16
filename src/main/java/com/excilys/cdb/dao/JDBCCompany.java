@@ -1,15 +1,15 @@
 package com.excilys.cdb.dao;
 
-import java.sql.*;
 import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.excilys.cdb.hikaricp.HikariCP;
 import com.excilys.cdb.model.Company;
-import com.excilys.cdb.model.MapperCompany;
 
 public class JDBCCompany {
 
@@ -19,57 +19,48 @@ public class JDBCCompany {
 	private static final String QUERY_DELETE_COMPANY = "DELETE FROM company WHERE id = ?";
 	private static final String QUERY_DELETE_COMPUTER_WITH_COMPANY_ID = "DELETE FROM computer WHERE company_id = ?";
 	private ApplicationContext applicationContext;
-	private HikariCP hikariCP; 
-	private ResultSet resultSet;
-	
+	private JdbcTemplate jdbcTemplate;
+
 	public JDBCCompany() {
 		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		hikariCP = (HikariCP) applicationContext.getBean(HikariCP.class);
+		jdbcTemplate = (JdbcTemplate) applicationContext.getBean(JdbcTemplate.class);
 	}
 
 	public Optional<Company> getCompanyByID(int id) {
+
 		Company company = null;
-		try (Connection conn = hikariCP.getConnection();
-				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_COMPANY_BY_ID);) {
-			preparedStatement.setInt(1, id);
-			resultSet = preparedStatement.executeQuery();
-			company = MapperCompany.resultSetToCompany(resultSet);
-		} catch (SQLException e) {
-			logger.error("Error while trying to get company with specified ID !", e);
+		try {
+			company = jdbcTemplate.queryForObject(QUERY_GET_COMPANY_BY_ID, new Object[] { id },
+					new BeanPropertyRowMapper<Company>(Company.class));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
 		}
 		return Optional.ofNullable(company);
 	}
 
 	public ArrayList<Company> getAllCompany() {
-		ArrayList<Company> lCompany = new ArrayList<>();
-		try (Connection conn = hikariCP.getConnection();
-				PreparedStatement preparedStatement = conn.prepareStatement(QUERY_GET_ALL_COMPANY);) {
-			resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Company company = MapperCompany.resultSetToCompany(resultSet);
-				lCompany.add(company);
-			}
-		} catch (SQLException e) {
-			logger.error("Error while trying to get all company !", e);
+		ArrayList<Company> companyList = new ArrayList<>();
+		try {
+			companyList = (ArrayList<Company>) jdbcTemplate.query(QUERY_GET_ALL_COMPANY,
+					new BeanPropertyRowMapper<Company>(Company.class));
+		} catch (DataAccessException e) {
+			logger.error("Cannot get company List", e);
 		}
-		return lCompany;
+		return companyList;
 	}
 
 	public boolean deleteCompany(int id) {
 		int resultQuery1 = 0;
+		try {
+			resultQuery1 = jdbcTemplate.update(QUERY_DELETE_COMPUTER_WITH_COMPANY_ID, id);
+		} catch (DataAccessException e1) {
+			logger.error("Unable to delete all computer from the company", e1);
+		}
 		int resultQuery2 = 0;
-		try (Connection conn = hikariCP.getConnection();
-				PreparedStatement preparedStatement1 = conn.prepareStatement(QUERY_DELETE_COMPUTER_WITH_COMPANY_ID);
-				PreparedStatement preparedStatement2 = conn.prepareStatement(QUERY_DELETE_COMPANY);) {
-			conn.setAutoCommit(false);
-			preparedStatement1.setInt(1, id);
-			preparedStatement2.setInt(1, id);
-			resultQuery1 = preparedStatement1.executeUpdate();
-			resultQuery2 = preparedStatement2.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		try {
+			resultQuery2 = jdbcTemplate.update(QUERY_DELETE_COMPANY, id);
+		} catch (DataAccessException e1) {
+			logger.error("Unable to delete the company");
 		}
 		return (resultQuery1 > 0 && resultQuery2 > 0) ? true : false;
 	}
