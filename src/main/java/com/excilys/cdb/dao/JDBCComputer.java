@@ -3,8 +3,6 @@ package com.excilys.cdb.dao;
 import java.util.*;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,12 +17,10 @@ public class JDBCComputer {
 	private static final String QUERY_ADD_COMPUTER = "INSERT INTO computer (name, introduced, discontinued, company_id) VALUES (?,?,?,?)";
 	private static final String QUERY_DELETE_COMPUTER = "DELETE FROM computer WHERE id = ?";
 	private static final String QUERY_UPDATE_COMPUTER = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?,company_id = ? WHERE id = ?";
-	private ApplicationContext applicationContext;
 	private JdbcTemplate jdbcTemplate;
 
-	public JDBCComputer() {
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		jdbcTemplate = (JdbcTemplate) applicationContext.getBean(JdbcTemplate.class);
+	public JDBCComputer(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	public Optional<Computer> getComputerByID(int id) {

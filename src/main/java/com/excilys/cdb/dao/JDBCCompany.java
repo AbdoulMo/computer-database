@@ -3,8 +3,6 @@ package com.excilys.cdb.dao;
 import java.util.*;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,12 +16,10 @@ public class JDBCCompany {
 	private static final String QUERY_GET_ALL_COMPANY = "SELECT id, name FROM company";
 	private static final String QUERY_DELETE_COMPANY = "DELETE FROM company WHERE id = ?";
 	private static final String QUERY_DELETE_COMPUTER_WITH_COMPANY_ID = "DELETE FROM computer WHERE company_id = ?";
-	private ApplicationContext applicationContext;
 	private JdbcTemplate jdbcTemplate;
 
-	public JDBCCompany() {
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		jdbcTemplate = (JdbcTemplate) applicationContext.getBean(JdbcTemplate.class);
+	public JDBCCompany(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	public Optional<Company> getCompanyByID(int id) {

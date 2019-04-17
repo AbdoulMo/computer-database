@@ -3,21 +3,16 @@ package com.excilys.cdb.services;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.excilys.cdb.dao.JDBCCompany;
 import com.excilys.cdb.exceptions.DataNotFoundException;
 import com.excilys.cdb.model.Company;
 
 public class CompanyServices {
 
-	private ApplicationContext applicationContext;
-	private static JDBCCompany daoCompany;
+	private JDBCCompany daoCompany;
 	
-	public CompanyServices() {
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		daoCompany = (JDBCCompany) applicationContext.getBean(JDBCCompany.class);
+	public CompanyServices(JDBCCompany daoCompany) {
+		this.daoCompany = daoCompany;
 	}
 
 	public Company getCompanyByID(int id) throws Exception {

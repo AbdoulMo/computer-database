@@ -37,8 +37,8 @@ public class ControllerCLI {
 
 	private final static Logger logger = Logger.getLogger(ControllerCLI.class);
 
-	ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	private Cli cli;
+	ApplicationContext applicationContext;
 	private ComputerServices computerServices;
 	private CompanyServices companyServices;
 	
@@ -46,6 +46,7 @@ public class ControllerCLI {
 	private boolean leaveApp = false;
 
 	public ControllerCLI() {
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		cli = (Cli) applicationContext.getBean(Cli.class);
 		computerServices = (ComputerServices) applicationContext.getBean(ComputerServices.class);
 		companyServices = (CompanyServices) applicationContext.getBean(CompanyServices.class);

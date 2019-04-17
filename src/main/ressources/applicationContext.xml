@@ -49,18 +49,24 @@
 
 	<bean id="cli" class="com.excilys.cdb.vue.Cli" scope="prototype"
 		lazy-init="true"></bean>
-	<bean id="hikariConnection"
-		class="com.excilys.cdb.hikaricp.HikariCP" scope="singleton"
-		lazy-init="true"></bean>
 	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany"
-		scope="prototype" lazy-init="true"></bean>
-	<bean id="daoCOmputer" class="com.excilys.cdb.dao.JDBCComputer"
-		scope="prototype" lazy-init="true"></bean>
-	<bean id="companyService"
+		scope="prototype" lazy-init="true">
+		<constructor-arg index="0" ref="jdbctemplate" />
+		</bean>
+	<bean id="daoComputer" class="com.excilys.cdb.dao.JDBCComputer"
+		scope="prototype" lazy-init="true">
+		<constructor-arg index="0" ref="jdbctemplate" />
+		</bean>
+	<bean id="companyServices"
 		class="com.excilys.cdb.services.CompanyServices" scope="prototype"
-		lazy-init="true"></bean>
-	<bean id="computerService"
+		lazy-init="true">
+		<constructor-arg index="0" ref="daoCompany" />
+		</bean>
+	<bean id="computerServices"
 		class="com.excilys.cdb.services.ComputerServices" scope="prototype"
-		lazy-init="true"></bean>
+		lazy-init="true">
+		<constructor-arg index="0" ref="daoCompany" />
+		<constructor-arg index="1" ref="daoComputer" />
+		</bean>
 
 </beans>
