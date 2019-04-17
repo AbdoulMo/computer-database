@@ -27,7 +27,7 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<div class="label label-default pull-right">id:
-						${computerToEdit.getId()}</div>
+						${computerToEdit.id}</div>
 					<h1>Edit Computer</h1>
 					<c:if test="${computerToEdit != null}">
 						<form id="editComputerForm" action="editComputer" method="POST">

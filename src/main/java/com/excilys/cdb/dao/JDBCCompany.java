@@ -11,7 +11,7 @@ import com.excilys.cdb.model.Company;
 
 public class JDBCCompany {
 
-	private final static Logger logger = Logger.getLogger(JDBCCompany.class);
+	private final Logger logger = Logger.getLogger(JDBCCompany.class);
 	private static final String QUERY_GET_COMPANY_BY_ID = "SELECT id, name FROM company WHERE id = ?";
 	private static final String QUERY_GET_ALL_COMPANY = "SELECT id, name FROM company";
 	private static final String QUERY_DELETE_COMPANY = "DELETE FROM company WHERE id = ?";

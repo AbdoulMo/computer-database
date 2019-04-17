@@ -21,12 +21,12 @@
 	</bean>
 
 	<!-- mvc -->
-	<!-- <mvc:annotation-driven /> <mvc:resources mapping="/resources/**" location="/resources/" 
+	 <mvc:annotation-driven /> <mvc:resources mapping="/resources/**" location="/resources/" 
 		/> <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
 		<property name="prefix"> <value>/web-ressources/views/</value> </property> 
 		<property name="suffix"> <value>.jsp</value> </property> </bean> <context:component-scan 
 		base-package="com.excilys.cdb.controller.web" /> <context:property-placeholder 
-		location="classpath:database.properties" /> -->
+		location="classpath:database.properties" />
 	<!-- mvc -->
 
 	<bean id="dataSource"
@@ -49,18 +49,24 @@
 
 	<bean id="cli" class="com.excilys.cdb.vue.Cli" scope="prototype"
 		lazy-init="true"></bean>
-	<bean id="hikariConnection"
-		class="com.excilys.cdb.hikaricp.HikariCP" scope="singleton"
-		lazy-init="true"></bean>
 	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany"
-		scope="prototype" lazy-init="true"></bean>
-	<bean id="daoCOmputer" class="com.excilys.cdb.dao.JDBCComputer"
-		scope="prototype" lazy-init="true"></bean>
-	<bean id="companyService"
+		scope="prototype" lazy-init="true">
+		<constructor-arg index="0" ref="jdbctemplate" />
+		</bean>
+	<bean id="daoComputer" class="com.excilys.cdb.dao.JDBCComputer"
+		scope="prototype" lazy-init="true">
+		<constructor-arg index="0" ref="jdbctemplate" />
+		</bean>
+	<bean id="companyServices"
 		class="com.excilys.cdb.services.CompanyServices" scope="prototype"
-		lazy-init="true"></bean>
-	<bean id="computerService"
+		lazy-init="true">
+		<constructor-arg index="0" ref="daoCompany" />
+		</bean>
+	<bean id="computerServices"
 		class="com.excilys.cdb.services.ComputerServices" scope="prototype"
-		lazy-init="true"></bean>
+		lazy-init="true">
+		<constructor-arg index="0" ref="daoCompany" />
+		<constructor-arg index="1" ref="daoComputer" />
+		</bean>
 
 </beans>
