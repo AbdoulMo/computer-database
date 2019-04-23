@@ -19,8 +19,9 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application - Computer
-				Database </a>
+			<a class="navbar-brand" href="dashboard"> <spring:message
+					code="msg.title" /> 
+			</a><a href="?lang=en">English</a> | <a href="?lang=fr">French</a>
 		</div>
 	</header>
 
@@ -28,31 +29,37 @@
 		<div class="container">
 			<h1 id="homeTitle">
 				<c:out value="${computersFound}" />
-				Computers found
+				<spring:message code="msg.computerFound" />
 			</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
-					<form id="searchForm" action="#" method="GET" class="form-inline">
 
+					<form:form id="searchForm" method="GET" action="#"
+						class="form-inline">
 						<input type="search" id="searchbox" name="search"
-							class="form-control" placeholder="Search name" /> <input
-							type="submit" id="searchsubmit" value="Filter by name"
+							class="form-control"
+							placeholder=<spring:message code="msg.search"/> />
+						<input type="submit" id="searchsubmit"
+							value=<spring:message code="msg.btnSearch"/>
 							class="btn btn-primary" />
-					</form>
+					</form:form>
+
 				</div>
 				<div class="pull-right">
-					<a class="btn btn-success" id="addComputer" href="addComputer">Add
-						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
-						onclick="$.fn.toggleEditMode();">Edit</a>
+					<a class="btn btn-success" id="addComputer" href="addComputer"><spring:message
+							code="msg.addComputer" /></a> <a class="btn btn-default"
+						id="editComputer" href="#" onclick="$.fn.toggleEditMode();"><spring:message
+							code="msg.btnEdit" /></a>
 				</div>
 			</div>
 		</div>
 
-		<c:forEach var="computer" items="${displayedComputer}">
-			<form id="deleteForm" action="deleteComputer" method="POST">
+		<form:form id="deleteForm" action="deleteComputer" method="POST">
+			<c:forEach var="computer" items="${displayedComputer}">
 				<input type="hidden" name="selection" value="${computer.getId()}">
-			</form>
-		</c:forEach>
+			</c:forEach>
+		</form:form>
+
 
 		<div class="container" style="margin-top: 10px;">
 			<table class="table table-striped table-bordered">
@@ -68,15 +75,19 @@
 									class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th>Computer name <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=name"><span
-								class="glyphicon glyphicon-chevron-up"></span> </a> </th>
-						<th>Introduced date <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=introduced"><span
+						<th><spring:message code="msg.computerName" /> <a
+							href="dashboard?<%=request.getParameter("search") == null ? "" : "search=" + request.getParameter("search") + "&"%>orderBy=name"><span
+								class="glyphicon glyphicon-chevron-up"></span> </a></th>
+						<th><spring:message code="msg.computerDateI" /> <a
+							href="dashboard?<%=request.getParameter("search") == null ? "" : "search=" + request.getParameter("search") + "&"%>orderBy=introduced"><span
 								class="glyphicon glyphicon-chevron-up"></span> </a></th>
 						<!-- Table header for Discontinued Date -->
-						<th>Discontinued date <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=discontinued"><span
+						<th><spring:message code="msg.computerDateD" /> <a
+							href="dashboard?<%=request.getParameter("search") == null ? "" : "search=" + request.getParameter("search") + "&"%>orderBy=discontinued"><span
 								class="glyphicon glyphicon-chevron-up"></span> </a></th>
 						<!-- Table header for Company -->
-						<th>Company <a href="dashboard?<%=request.getParameter("search") == null ? "" : "search="+request.getParameter("search")+"&"%>orderBy=company"><span
+						<th><spring:message code="msg.computerCompany" /> <a
+							href="dashboard?<%=request.getParameter("search") == null ? "" : "search=" + request.getParameter("search") + "&"%>orderBy=company"><span
 								class="glyphicon glyphicon-chevron-up"></span> </a></th>
 
 					</tr>

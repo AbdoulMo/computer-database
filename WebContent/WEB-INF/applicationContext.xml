@@ -11,6 +11,9 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<mvc:resources location="/web-ressources/"
+		mapping="/web-ressources/**"></mvc:resources>
+
 	<bean id="myProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -20,14 +23,22 @@
 		</property>
 	</bean>
 
-	<!-- mvc -->
-	 <mvc:annotation-driven /> <mvc:resources mapping="/resources/**" location="/resources/" 
-		/> <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-		<property name="prefix"> <value>/web-ressources/views/</value> </property> 
-		<property name="suffix"> <value>.jsp</value> </property> </bean> <context:component-scan 
-		base-package="com.excilys.cdb.controller.web" /> <context:property-placeholder 
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/web-ressources/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<context:component-scan
+		base-package="com.excilys.cdb.controller.web" />
+	<context:property-placeholder
 		location="classpath:database.properties" />
-	<!-- mvc -->
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -52,21 +63,41 @@
 	<bean id="daoCompany" class="com.excilys.cdb.dao.JDBCCompany"
 		scope="prototype" lazy-init="true">
 		<constructor-arg index="0" ref="jdbctemplate" />
-		</bean>
+	</bean>
 	<bean id="daoComputer" class="com.excilys.cdb.dao.JDBCComputer"
 		scope="prototype" lazy-init="true">
 		<constructor-arg index="0" ref="jdbctemplate" />
-		</bean>
+	</bean>
 	<bean id="companyServices"
 		class="com.excilys.cdb.services.CompanyServices" scope="prototype"
 		lazy-init="true">
 		<constructor-arg index="0" ref="daoCompany" />
-		</bean>
+	</bean>
 	<bean id="computerServices"
 		class="com.excilys.cdb.services.ComputerServices" scope="prototype"
 		lazy-init="true">
 		<constructor-arg index="0" ref="daoCompany" />
 		<constructor-arg index="1" ref="daoComputer" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="fr" />
+		<property name="cookieName" value="myAppLocaleCookie"></property>
+		<property name="cookieMaxAge" value="3600"></property>
+	</bean>
+    
+   	<mvc:interceptors>
+		<bean
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
 		</bean>
+	</mvc:interceptors>
 
 </beans>

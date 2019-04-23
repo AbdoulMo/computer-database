@@ -20,14 +20,14 @@
 		</property>
 	</bean>
 
-	<!-- mvc -->
-	<!-- <mvc:annotation-driven /> <mvc:resources mapping="/resources/**" location="/resources/" 
+	
+	 <mvc:annotation-driven /> <mvc:resources mapping="/resources/**" location="/resources/" 
 		/> <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
 		<property name="prefix"> <value>/web-ressources/views/</value> </property> 
 		<property name="suffix"> <value>.jsp</value> </property> </bean> <context:component-scan 
 		base-package="com.excilys.cdb.controller.web" /> <context:property-placeholder 
-		location="classpath:database.properties" /> -->
-	<!-- mvc -->
+		location="classpath:database.properties" />
+	
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

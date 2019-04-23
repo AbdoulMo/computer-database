@@ -3,9 +3,11 @@ package com.excilys.cdb.controller.web;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +25,14 @@ public class Dashboard {
 	private ComputerServices computerService;
 	private Paging paging;
 
-	public Dashboard(ComputerServices computerServices) {
+	public Dashboard(ComputerServices computerServices, MessageSource messageSource) {
 		this.computerService = computerServices;
 	}
 
 	@GetMapping({ "/", "/dashboard" })
 	public String hello(@RequestParam(value = "search", required = false) String searchPattern,
 			@RequestParam(value = "orderBy", required = false) String orderBy,
-			@RequestParam(value = "page", required = false, defaultValue = "0") int pageQuery, Model model) {
+			@RequestParam(value = "page", required = false, defaultValue = "0") int pageQuery, Model model, Locale locale) {
 
 		ArrayList<DTOComputer> listToDisplay = new ArrayList<>();
 		ArrayList<DTOComputer> allComputerList = new ArrayList<>();
@@ -80,7 +82,6 @@ public class Dashboard {
 		model.addAttribute("displayedComputer", displayedComputer);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("numberOfPage", paging.getNumberOfPage());
-
 		return "dashboard";
 	}
 }

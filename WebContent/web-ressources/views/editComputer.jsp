@@ -18,8 +18,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="dashboard"> Application - Computer
-				Database </a>
+			<a class="navbar-brand" href="dashboard"> <spring:message code="msg.title"/> </a>
 		</div>
 	</header>
 	<section id="main">
@@ -28,45 +27,48 @@
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<div class="label label-default pull-right">id:
 						${computerToEdit.id}</div>
-					<h1>Edit Computer</h1>
+					<h1><spring:message code="msg.editComputer"/></h1>
 					<c:if test="${computerToEdit != null}">
-						<form id="editComputerForm" action="editComputer" method="POST">
+						<form id="editComputerForm" action="editComputer"
+							method="POST">
 							<input type="hidden" name="computerID"
 								value="${computerToEdit.getId()}" id="id" />
 							<fieldset>
 								<div class="form-group">
-									<label for="computerName">Computer name</label> <input
-										type="text" class="form-control" id="computerName"
-										name="computerName" placeholder="Computer name"
+									<label for="computerName"><spring:message code="msg.computerName"/></label>
+									<input type="text"
+										class="form-control" id="computerName" name="computerName"
+										placeholder="Computer name"
 										value="${computerToEdit.getName()}"
 										data-validation="alphanumeric"
 										data-validation-ignore=" ,-,+,.,&,/,:"
 										data-validation-error-msg="Nom d'entreprise invalide 
 										seul les caractères alphanumérique ainsi 
-										que les caractères suivants sont autorisé: espace, -, +, ., &, /, :">
+										que les caractères suivants sont autorisé: espace, -, +, ., &, /, :" />
 								</div>
 								<div class="form-group">
-									<label for="introduced">Introduced date</label> <input
+									<label for="introduced"><spring:message code="msg.computerDateI"/></label> 
+									<input
 										type="date" class="form-control" id="introduced"
 										name="introduced" placeholder="Introduced date"
 										value="${computerToEdit.getIntroduced()}"
-										data-validation="date">
+										data-validation="date" />
 								</div>
 								<div class="form-group">
-									<label for="discontinued">Discontinued date</label> <input
+									<label for="discontinued"><spring:message code="msg.computerDateD"/></label> 
+									<input
 										type="date" class="form-control" id="discontinued"
 										name="discontinued" placeholder="Discontinued date"
 										value="${computerToEdit.getDiscontinued()}"
-										data-validation="date">
+										data-validation="date"/>
 								</div>
 								<div class="form-group">
-									<label for="companyId">Company
-										${computerToEdit.getManufacturer_name()}</label> <select
+									<label for="companyId"><spring:message code="msg.computerCompany"/></label> 
+										<select
 										class="form-control" id="companyId" name="companyId"
 										data-validation="number"
 										data-validation-error-msg="Choix d'entreprise invalide">
-										<option value="invalid">Veuillez choisir une
-											entreprise</option>
+										<option value="invalid"><spring:message code="msg.selectCompany"/></option>
 										<c:forEach var="company" items="${companyList}">
 											<option value="${company.getId()}"
 												${computerToEdit.getManufacturer_name() == company.getName() ? 'selected' : ''}>${company.getName()}</option>
@@ -75,8 +77,8 @@
 								</div>
 							</fieldset>
 							<div class="actions pull-right">
-								<input type="submit" value="Edit" class="btn btn-primary">
-								or <a href="dashboard" class="btn btn-default">Cancel</a>
+								<input type="submit" value=<spring:message code="msg.btnEdit"/> class="btn btn-primary">
+								or <a href="dashboard" class="btn btn-default"><spring:message code="msg.btnCancel"/></a>
 							</div>
 						</form>
 					</c:if>
