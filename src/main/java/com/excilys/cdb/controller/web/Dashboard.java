@@ -3,7 +3,6 @@ package com.excilys.cdb.controller.web;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
@@ -32,7 +31,7 @@ public class Dashboard {
 	@GetMapping({ "/", "/dashboard" })
 	public String hello(@RequestParam(value = "search", required = false) String searchPattern,
 			@RequestParam(value = "orderBy", required = false) String orderBy,
-			@RequestParam(value = "page", required = false, defaultValue = "0") int pageQuery, Model model, Locale locale) {
+			@RequestParam(value = "page", required = false, defaultValue = "0") int pageQuery, Model model) {
 
 		ArrayList<DTOComputer> listToDisplay = new ArrayList<>();
 		ArrayList<DTOComputer> allComputerList = new ArrayList<>();
