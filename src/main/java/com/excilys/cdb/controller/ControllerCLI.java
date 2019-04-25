@@ -111,11 +111,19 @@ public class ControllerCLI {
 											updateParams.get(3));
 			break;
 		case DELETE_COMPUTER:
-			computerServices.deleteComputer(cli.askComputerIDToDelete());
+			try {
+				computerServices.deleteComputer(cli.askComputerIDToDelete());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			cli.deletedComputer();
 			break;
 		case DELETE_COMPANY:
-			companyServices.deleteCompany(cli.askCompanyIDToDelete());
+			try {
+				companyServices.deleteCompany(cli.askCompanyIDToDelete());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			cli.deletedCompany();
 			break;
 		case LEAVE_APP:

@@ -18,7 +18,11 @@ public class DeleteComputer {
 	@PostMapping({ "/deleteComputer" })
 	public String deleteComputer(@RequestParam(value = "selection", required = true) String listComputersID) {
 		String[] computersID = listComputersID.split(",");
-		computerServices.deleteComputer(computersID);
+		try {
+			computerServices.deleteComputer(computersID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return "dashboard";
 	}

@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0"> 
   <display-name>CDB AbdoulMo</display-name>
   
-  <context-param>
+  <!-- <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/classes/applicationContext.xml
@@ -21,7 +21,7 @@
     
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
   
   <listener>
@@ -39,5 +39,5 @@
       <url-pattern>*.jsp</url-pattern>
       <include-prelude>/web-ressources/views/taglib.jsp</include-prelude>
     </jsp-property-group>
-  </jsp-config>
+  </jsp-config> -->
 </web-app>

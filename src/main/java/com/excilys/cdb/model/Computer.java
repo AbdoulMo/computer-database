@@ -2,19 +2,30 @@ package com.excilys.cdb.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@Entity
+@Table(name = "computer")
 public class Computer {
 
 	public static class ComputerBuilder {
 
-		private int id;
+		private Integer id;
 		private String name;
 		private Date introduced;
 		private Date discontinued;
-		private int manufacturer_id;
+		private Integer manufacturerId;
+		private Company company;
 
-		public ComputerBuilder withID(int id) {
+		public ComputerBuilder withID(Integer id) {
 			this.id = id;
 			return this;
 		}
@@ -34,8 +45,13 @@ public class Computer {
 			return this;
 		}
 
-		public ComputerBuilder withManufacturerID(int manufacturer_id) {
-			this.manufacturer_id = manufacturer_id;
+		public ComputerBuilder withManufacturerID(Integer manufacturerId) {
+			this.manufacturerId = manufacturerId;
+			return this;
+		}
+
+		public ComputerBuilder withCompany(Company company) {
+			this.company = company;
 			return this;
 		}
 
@@ -45,26 +61,36 @@ public class Computer {
 			computer.name = this.name;
 			computer.introduced = this.introduced;
 			computer.discontinued = this.discontinued;
-			computer.manufacturer_id = this.manufacturer_id;
+			computer.manufacturerId = this.manufacturerId;
+			computer.company = this.company;
 			return computer;
 		}
 	}
 
-	private int id;
+	@Id
+	@GeneratedValue
+	private Integer id;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "introduced")
 	private Date introduced;
+	@Column(name = "discontinued")
 	private Date discontinued;
-	private int manufacturer_id;
+	@Column(name = "company_id")
+	private Integer manufacturerId;
+	@ManyToOne
+	@JoinColumn(name = "company_id", referencedColumnName = "id", insertable = false, updatable = false)
+	private Company company;
 
 	private Computer() {
 
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -92,22 +118,26 @@ public class Computer {
 		this.discontinued = discontinued;
 	}
 
-	public int getManufacturer_id() {
-		return manufacturer_id;
+	public Integer getManufacturerId() {
+		return manufacturerId;
 	}
 
-	public void setManufacturer_id(int manufacturer_id) {
-		this.manufacturer_id = manufacturer_id;
+	public void setManufacturerId(Integer manufacturerId) {
+		this.manufacturerId = manufacturerId;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("id", id)
-				.append("name", name)
-				.append("introduced", introduced)
-				.append("discontinued", discontinued)
-				.append("manufacturer_id", manufacturer_id)
-				.toString();
+		return new ToStringBuilder(this).append("id", id).append("name", name).append("introduced", introduced)
+				.append("discontinued", discontinued).append("manufacturerId", manufacturerId)
+				.append("company", company).toString();
 	}
 }

@@ -15,6 +15,8 @@
 		<jstl>1.2</jstl>
 		<HickariCP>2.7.8</HickariCP>
 		<Spring>5.1.5.RELEASE</Spring>
+		<Hibernate>5.4.2.Final</Hibernate>
+		<SpringDataJpa>2.1.5.RELEASE</SpringDataJpa>
 	</properties>
 	<dependencies>
 
@@ -78,6 +80,24 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${Spring}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${Spring}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${Hibernate}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${SpringDataJpa}</version>
 		</dependency>
 
 

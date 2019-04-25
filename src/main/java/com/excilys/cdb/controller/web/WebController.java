@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,22 +13,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.excilys.cdb.exceptions.DataNotFoundException;
 import com.excilys.cdb.model.DTOComputer;
+import com.excilys.cdb.services.CompanyServices;
 import com.excilys.cdb.services.ComputerServices;
 import com.excilys.cdb.vue.Paging;
 
 @Controller
-public class Dashboard {
+public class WebController {
 
-	private final Logger logger = Logger.getLogger(Dashboard.class);
+	private final Logger logger = Logger.getLogger(WebController.class);
 	private ComputerServices computerService;
+
 	private Paging paging;
 
-	public Dashboard(ComputerServices computerServices, MessageSource messageSource) {
+	public WebController(ComputerServices computerServices, CompanyServices companyServices) {
 		this.computerService = computerServices;
 	}
 
-	@GetMapping({ "/", "/dashboard" })
-	public String hello(@RequestParam(value = "search", required = false) String searchPattern,
+	@GetMapping({ "/dashboard" })
+	public String dashboard(@RequestParam(value = "search", required = false) String searchPattern,
 			@RequestParam(value = "orderBy", required = false) String orderBy,
 			@RequestParam(value = "page", required = false, defaultValue = "0") int pageQuery, Model model) {
 

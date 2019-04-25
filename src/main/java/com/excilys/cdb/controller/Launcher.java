@@ -6,7 +6,6 @@ public class Launcher {
 		
 		ControllerCLI controllerCLI = new ControllerCLI();
 		controllerCLI.runApp();
-		
 	}
 
 }
