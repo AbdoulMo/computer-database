@@ -15,7 +15,6 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -31,9 +30,13 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = {"com.excilys.cdb.springconfig", "com.excilys.cdb.controller.web", "com.excilys.cdb.services"})
+@ComponentScan(basePackages = { "com.excilys.cdb.springconfig", "com.excilys.cdb.controller.web",
+		"com.excilys.cdb.services" })
 @PropertySource("classpath:database.properties")
 @EnableJpaRepositories("com.excilys.cdb.dao")
 @EnableTransactionManagement
@@ -44,16 +47,16 @@ public class SpringConfig implements WebMvcConfigurer {
 	public SpringConfig(Environment environment) {
 		this.environment = environment;
 	}
-	
+
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
-	
+
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/web-ressources/**").addResourceLocations("/web-ressources/");
 	}
-	
+
 	@Bean
 	public InternalResourceViewResolver resolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -87,11 +90,16 @@ public class SpringConfig implements WebMvcConfigurer {
 
 	@Bean
 	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(environment.getRequiredProperty("driverClassName"));
-		dataSource.setUrl(environment.getRequiredProperty("jdbcUrl"));
-		dataSource.setUsername(environment.getRequiredProperty("dataSource.user"));
-		dataSource.setPassword(environment.getRequiredProperty("dataSource.password"));
+		HikariConfig config = new HikariConfig();
+		config.setDriverClassName(environment.getRequiredProperty("driverClassName"));
+		config.setJdbcUrl(environment.getRequiredProperty("jdbcUrl"));
+		config.setUsername(environment.getRequiredProperty("dataSource.user"));
+		config.setPassword(environment.getRequiredProperty("dataSource.password"));
+		config.addDataSourceProperty("cachePrepStmts", environment.getRequiredProperty("dataSource.cachePrepStmts"));
+		config.addDataSourceProperty("prepStmtCacheSize", environment.getRequiredProperty("dataSource.prepStmtCacheSize"));
+		config.addDataSourceProperty("prepStmtCacheSqlLimit", environment.getRequiredProperty("dataSource.prepStmtCacheSqlLimit"));
+
+		HikariDataSource dataSource = new HikariDataSource(config);
 		return dataSource;
 	}
 
@@ -112,7 +120,7 @@ public class SpringConfig implements WebMvcConfigurer {
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-	
+
 	@Bean
 	public LocaleResolver localeResolver() {
 		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
@@ -120,7 +128,7 @@ public class SpringConfig implements WebMvcConfigurer {
 		localeResolver.setCookieMaxAge(3600);
 		return localeResolver;
 	}
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -128,5 +136,5 @@ public class SpringConfig implements WebMvcConfigurer {
 		interceptorRegistry.addInterceptor(localeChangeInterceptor);
 	}
 	/*---end I18N Config---*/
-	
+
 }
