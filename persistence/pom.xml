@@ -19,8 +19,8 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.excilys.cdb.model</groupId>
-			<artifactId>core</artifactId>
+			<groupId>com.excilys.cdb.binding</groupId>
+			<artifactId>binding</artifactId>
 			<version>${moduleVersion}</version>
 		</dependency>
 
@@ -41,11 +41,17 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${Spring}</version>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${Hibernate}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${Spring}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${SpringDataJpa}</version>
 		</dependency>
 
 	</dependencies>

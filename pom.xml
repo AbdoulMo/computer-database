@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.excilys.cdb</groupId>
 	<artifactId>computer-database</artifactId>
@@ -19,8 +21,8 @@
 		<Hibernate>5.4.2.Final</Hibernate>
 		<SpringDataJpa>2.1.5.RELEASE</SpringDataJpa>
 	</properties>
-	<dependencies>
 
+	<!-- <dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -33,58 +35,8 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j}</version>
 		</dependency>
+	</dependencies> -->
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${common-lang}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>${jstl}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${Spring}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${Spring}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${Spring}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${Hibernate}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>${SpringDataJpa}</version>
-		</dependency>
-
-
-	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -105,13 +57,13 @@
 		</plugins>
 	</build>
 
-  <modules>
-    <module>core</module>
-    <module>persistence</module>
-    <module>service</module>
-    <module>binding</module>
-    <module>webapp</module>
-    <module>console</module>
-  </modules>
+	<modules>
+		<module>core</module>
+		<module>binding</module>
+		<module>persistence</module>
+		<module>service</module>
+		<module>webapp</module>
+		<module>console</module>
+	</modules>
 
 </project>

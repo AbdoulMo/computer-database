@@ -2,6 +2,9 @@ package com.excilys.cdb.model;
 
 import java.sql.Date;
 
+import com.excilys.cdb.model.Company;
+import com.excilys.cdb.model.Computer;
+
 public class MapperComputer {
 	
 	public static DTOComputer objectToDTO(Computer computer, Company company) {
